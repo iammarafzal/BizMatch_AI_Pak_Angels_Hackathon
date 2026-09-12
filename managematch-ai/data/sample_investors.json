@@ -1,0 +1,44 @@
+[
+  {
+    "id": "investor_01",
+    "name": "Tariq Khan",
+    "firm_name": "Indus Valley Angels Network",
+    "investor_type": "Angel Syndicate",
+    "check_size_min_usd": 25000,
+    "check_size_max_usd": 150000,
+    "preferred_stages": ["Pre-Seed", "Seed"],
+    "preferred_sectors": ["AgriTech", "ClimateTech", "FinTech"],
+    "target_geographies": ["Pakistan", "Emerging Markets"],
+    "thesis_summary": "Backing mission-driven founders leveraging technology to solve food security, rural prosperity, and financial inclusion across Pakistan and wider South Asia.",
+    "portfolio_highlights": ["PakAgri Solutions", "ZameenPay", "SolarSmart PK"],
+    "value_add": ["Deep corporate distribution ties in Punjab agribusiness", "Regulatory navigation with State Bank of Pakistan"]
+  },
+  {
+    "id": "investor_02",
+    "name": "Sarah Mansoor",
+    "firm_name": "SilkRoad Ventures",
+    "investor_type": "Venture Capital",
+    "check_size_min_usd": 150000,
+    "check_size_max_usd": 750000,
+    "preferred_stages": ["Seed", "Series A"],
+    "preferred_sectors": ["HealthTech", "Supply Chain", "B2B Marketplaces"],
+    "target_geographies": ["Pakistan", "MENA"],
+    "thesis_summary": "Investing in high-margin B2B infrastructure and fragmented supply chain digitizers in emerging markets with strong gross profit and unit economics.",
+    "portfolio_highlights": ["MedExpress Egypt", "CargoBridge Dubai", "PharmaDrop"],
+    "value_add": ["Cross-border scaling into UAE & Saudi Arabia", "Follow-on Tier-1 international VC syndication"]
+  },
+  {
+    "id": "investor_03",
+    "name": "Kamran Javed",
+    "firm_name": "Pak Angels Silicon Valley Chapter",
+    "investor_type": "Angel Investor",
+    "check_size_min_usd": 20000,
+    "check_size_max_usd": 75000,
+    "preferred_stages": ["Pre-Seed", "Seed"],
+    "preferred_sectors": ["SaaS", "FinTech", "AI"],
+    "target_geographies": ["Pakistan", "US Diaspora"],
+    "thesis_summary": "Passionate about empowering Pakistani technical founders building export-oriented SaaS, developer tools, and workflow automation for the global market.",
+    "portfolio_highlights": ["CloudScale Labs", "TalentForge Asia"],
+    "value_add": ["Silicon Valley mentorship, US corporate connections, and Del-C incorporation strategy"]
+  }
+]

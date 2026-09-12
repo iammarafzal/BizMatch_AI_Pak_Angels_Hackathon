@@ -1,0 +1,98 @@
+[
+  {
+    "id": "startup_01",
+    "name": "KisanGrow AI",
+    "tagline": "Precision satellite & AI advisory for smallholder agricultural resilience",
+    "industries": [
+      "AgriTech",
+      "AI",
+      "ClimateTech"
+    ],
+    "stage": "Pre-Seed",
+    "target_raise_usd": 300000,
+    "geography": [
+      "Pakistan",
+      "MENA"
+    ],
+    "mrr_usd": 12500,
+    "team_size": 6,
+    "founders": [
+      {
+        "name": "Ali Hassan",
+        "role": "CEO",
+        "background": "Ex-NayaTel, LUMS CS '19"
+      },
+      {
+        "name": "Fatima Zahra",
+        "role": "CTO",
+        "background": "PhD Geospatial AI, Stanford"
+      }
+    ],
+    "problem": "Smallholder farmers in the Indus basin face 30% yield loss due to inaccurate weather, water stress, and pest prediction.",
+    "solution": "Affordable Urdu-language mobile app and WhatsApp bot that analyzes hyperspectral satellite imagery to provide daily localized micro-action recommendations.",
+    "traction": "45,000 registered farmers across Punjab & Sindh, 18% month-over-month active user growth, $12.5k MRR via B2B fertilizer partnerships.",
+    "pitch_summary": "Empowering 10M farmers across South Asia with localized satellite AI intelligence to increase crop yield by 24% while cutting water usage."
+  },
+  {
+    "id": "startup_02",
+    "name": "DawaaConnect",
+    "tagline": "B2B pharmaceutical procurement and credit network for independent pharmacies",
+    "industries": [
+      "HealthTech",
+      "FinTech",
+      "Supply Chain"
+    ],
+    "stage": "Seed",
+    "target_raise_usd": 750000,
+    "geography": [
+      "Pakistan"
+    ],
+    "mrr_usd": 48000,
+    "team_size": 14,
+    "founders": [
+      {
+        "name": "Bilal Siddiqui",
+        "role": "CEO",
+        "background": "Ex-GSK Commercial Lead"
+      },
+      {
+        "name": "Zainab Malik",
+        "role": "COO",
+        "background": "Ex-Careem Logistics Director"
+      }
+    ],
+    "problem": "90% of neighborhood pharmacies suffer from stockouts, counterfeit medicines, and predatory informal supplier credit.",
+    "solution": "Digital ordering marketplace direct from licensed manufacturers with integrated 30-day working capital micro-credit.",
+    "traction": "Serving 1,200 pharmacies in Lahore and Karachi, processing $450k GMV per month with 99.2% on-time credit repayment.",
+    "pitch_summary": "Digitizing Pakistan's $4B retail pharmaceutical supply chain through verified distribution and embedded working capital financing."
+  },
+  {
+    "id": "startup_03",
+    "name": "LedgerSync",
+    "tagline": "AI CFO and tax compliance automation for Pakistani SMBs and freelancers",
+    "industries": [
+      "FinTech",
+      "SaaS",
+      "AI"
+    ],
+    "stage": "Pre-Seed",
+    "target_raise_usd": 200000,
+    "geography": [
+      "Pakistan",
+      "US Diaspora"
+    ],
+    "mrr_usd": 8200,
+    "team_size": 4,
+    "founders": [
+      {
+        "name": "Usman Tariq",
+        "role": "CEO & Tech Lead",
+        "background": "Ex-PwC Senior Auditor, Self-taught Fullstack Dev"
+      }
+    ],
+    "problem": "Over 2 million SMBs and 500k IT freelancers struggle with FBR tax filing, cross-border remittance compliance, and bookkeeping.",
+    "solution": "Automated ledger that connects to Pakistani bank APIs, WhatsApp receipt scanning, and generates 1-click compliant FBR withholding and tax returns.",
+    "traction": "2,800 active freelancers and 220 SMBs subscribed; zero churn over last 3 months.",
+    "pitch_summary": "The all-in-one financial operating system for South Asian creators, exporters, and SMBs to automate bookkeeping and FBR compliance."
+  }
+]

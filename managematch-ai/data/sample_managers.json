@@ -1,0 +1,264 @@
+[
+  {
+    "id": "mgr_01",
+    "name": "Hamza Abbasi",
+    "role_title": "Fractional Head of Growth & Performance",
+    "monthly_rate_usd": 2400,
+    "verified_stages": [
+      "Seed",
+      "Growth"
+    ],
+    "industries": [
+      "E-Commerce",
+      "B2C Marketplaces",
+      "FinTech"
+    ],
+    "core_skills": [
+      "Performance Marketing",
+      "Retention & CRM",
+      "Funnel Analytics",
+      "Growth Experimentation"
+    ],
+    "years_experience": 8,
+    "location": "Lahore, Pakistan (Remote-friendly)",
+    "verified_track_record": "Scaled monthly GMV 5x at top regional D2C brand while reducing CAC by 42%. Built automated Braze lifecycle campaigns with 38% repeat rate.",
+    "education": "BBA, IBA Karachi",
+    "availability": "Part-time (20 hrs/week)"
+  },
+  {
+    "id": "mgr_02",
+    "name": "Ayesha Farooq",
+    "role_title": "Senior Technical Product Manager",
+    "monthly_rate_usd": 3000,
+    "verified_stages": [
+      "Early/Idea",
+      "Seed",
+      "Growth"
+    ],
+    "industries": [
+      "AgriTech",
+      "HealthTech",
+      "AI"
+    ],
+    "core_skills": [
+      "Technical Product Management",
+      "Agile / Scrum",
+      "Cross-Functional Leadership",
+      "Mobile Product Delivery"
+    ],
+    "years_experience": 7,
+    "location": "Islamabad, Pakistan",
+    "verified_track_record": "Led engineering and product teams for 2 venture-backed AI/IoT apps. Implemented 2-week dual-track agile cadence, cutting release bug rate by 60%.",
+    "education": "BS Computer Science, NUST",
+    "availability": "Fractional (25 hrs/week)"
+  },
+  {
+    "id": "mgr_03",
+    "name": "Bilal Murtaza",
+    "role_title": "VP of Operations & CX Systems",
+    "monthly_rate_usd": 3800,
+    "verified_stages": [
+      "Growth",
+      "Scale"
+    ],
+    "industries": [
+      "FinTech",
+      "Logistics",
+      "B2B Marketplaces"
+    ],
+    "core_skills": [
+      "Operations Management",
+      "Customer Experience (CX)",
+      "Process Automation",
+      "FinTech Compliance"
+    ],
+    "years_experience": 11,
+    "location": "Karachi, Pakistan",
+    "verified_track_record": "Built customer operations and compliance from 5 to 45 agents at high-volume FinTech. Reduced merchant onboarding SLA from 6 days to 4 hours via automated Zapier and custom API workflows.",
+    "education": "MBA, LUMS",
+    "availability": "Full-time advisory / interim"
+  },
+  {
+    "id": "mgr_04",
+    "name": "Zainab Qureshi",
+    "role_title": "Early-Stage Commercialization & Discovery Strategist",
+    "monthly_rate_usd": 1500,
+    "verified_stages": [
+      "Early/Idea",
+      "Seed"
+    ],
+    "industries": [
+      "HealthTech",
+      "Biotech",
+      "EdTech"
+    ],
+    "core_skills": [
+      "Customer Discovery",
+      "Product Strategy",
+      "B2B Sales",
+      "Pricing Optimization"
+    ],
+    "years_experience": 5,
+    "location": "Karachi, Pakistan",
+    "verified_track_record": "Facilitated over 120 founder customer interviews across 4 accelerator cohorts. Helped 6 technical founding teams establish value-based pricing and close first 10 pilot clients.",
+    "education": "BS Bioengineering, AKU",
+    "availability": "Advisory (10-15 hrs/week)"
+  },
+  {
+    "id": "mgr_05",
+    "name": "Omar Daniyal",
+    "role_title": "Head of Enterprise B2B Sales",
+    "monthly_rate_usd": 3500,
+    "verified_stages": [
+      "Seed",
+      "Growth"
+    ],
+    "industries": [
+      "B2B SaaS",
+      "Enterprise Software",
+      "FinTech"
+    ],
+    "core_skills": [
+      "B2B Enterprise Sales",
+      "Sales Pipeline Management",
+      "Outbound Prospecting",
+      "SaaS Deal Negotiation"
+    ],
+    "years_experience": 9,
+    "location": "Dubai / Remote Pakistan",
+    "verified_track_record": "Closed $1.2M ARR in outbound enterprise SaaS contracts across GCC and South Asia. Established cold outbound email and LinkedIn cadences generating 25 qualified demos/month.",
+    "education": "BSc Economics, FAST-NUCES",
+    "availability": "Fractional (20 hrs/week)"
+  },
+  {
+    "id": "mgr_06",
+    "name": "Maryam Sheikh",
+    "role_title": "Fractional Chief Marketing Officer (CMO)",
+    "monthly_rate_usd": 2800,
+    "verified_stages": [
+      "Seed",
+      "Growth"
+    ],
+    "industries": [
+      "E-Commerce",
+      "D2C Brands",
+      "EdTech"
+    ],
+    "core_skills": [
+      "Brand Strategy",
+      "Content Marketing",
+      "Influencer Partnerships",
+      "Performance Marketing"
+    ],
+    "years_experience": 8,
+    "location": "Lahore, Pakistan",
+    "verified_track_record": "Managed $500k annual marketing budget across social channels, generating 4.8x ROAS. Grew organic community to 200k members.",
+    "education": "BSc Mass Comm, Kinnaird College",
+    "availability": "Part-time (15-20 hrs/week)"
+  },
+  {
+    "id": "mgr_07",
+    "name": "Tariq Masood",
+    "role_title": "Engineering Director & Agile Coach",
+    "monthly_rate_usd": 3600,
+    "verified_stages": [
+      "Growth",
+      "Scale"
+    ],
+    "industries": [
+      "FinTech",
+      "B2B SaaS",
+      "Cloud Infrastructure"
+    ],
+    "core_skills": [
+      "Technical Architecture",
+      "Agile / Scrum",
+      "Engineering Management",
+      "CI/CD DevOps"
+    ],
+    "years_experience": 12,
+    "location": "Islamabad, Pakistan",
+    "verified_track_record": "Scaled engineering team from 8 to 50 engineers. Spearheaded microservices migration and lowered release cycle time from monthly to twice weekly.",
+    "education": "MS Software Engineering, GIKI",
+    "availability": "Fractional (20 hrs/week)"
+  },
+  {
+    "id": "mgr_08",
+    "name": "Sana Rasheed",
+    "role_title": "Talent & People Operations Lead",
+    "monthly_rate_usd": 1800,
+    "verified_stages": [
+      "Early/Idea",
+      "Seed",
+      "Growth"
+    ],
+    "industries": [
+      "B2B SaaS",
+      "E-Commerce",
+      "FinTech"
+    ],
+    "core_skills": [
+      "Technical Recruiting",
+      "People Operations",
+      "Compensation Design",
+      "Performance Reviews"
+    ],
+    "years_experience": 6,
+    "location": "Karachi, Pakistan",
+    "verified_track_record": "Hired 35 engineering and design roles in 9 months with zero recruiter agency spend. Designed startup employee handbook and option pool distribution plans.",
+    "education": "BBA HR, SZABIST",
+    "availability": "Part-time (15 hrs/week)"
+  },
+  {
+    "id": "mgr_09",
+    "name": "Kamran Asghar",
+    "role_title": "Head of Finance & Business Controller",
+    "monthly_rate_usd": 3200,
+    "verified_stages": [
+      "Seed",
+      "Growth"
+    ],
+    "industries": [
+      "FinTech",
+      "Logistics",
+      "E-Commerce"
+    ],
+    "core_skills": [
+      "Financial Modeling",
+      "Cash Runway Management",
+      "Unit Economics",
+      "FBR Tax Compliance"
+    ],
+    "years_experience": 10,
+    "location": "Lahore, Pakistan",
+    "verified_track_record": "Prepared financial models and data rooms for 3 successful Seed & Series A rounds raising $6M total. Reduced vendor burn rate by 22% within 60 days.",
+    "education": "FCA (ICAP Pakistan), CFA Charterholder",
+    "availability": "Fractional (15-20 hrs/week)"
+  },
+  {
+    "id": "mgr_10",
+    "name": "Nida Akhtar",
+    "role_title": "Product Design & UX Research Lead",
+    "monthly_rate_usd": 2200,
+    "verified_stages": [
+      "Early/Idea",
+      "Seed"
+    ],
+    "industries": [
+      "HealthTech",
+      "AgriTech",
+      "FinTech"
+    ],
+    "core_skills": [
+      "UX Research",
+      "Figma Design Systems",
+      "User Testing",
+      "Product Strategy"
+    ],
+    "years_experience": 6,
+    "location": "Islamabad, Pakistan",
+    "verified_track_record": "Redesigned mobile banking checkout flow improving task completion by 31%. Conducted 50+ on-field usability tests with non-tech-savvy rural users.",
+    "education": "B.Des, NCA Lahore",
+    "availability": "Part-time (20 hrs/week)"
+  }
+]

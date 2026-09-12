@@ -1,0 +1,102 @@
+[
+  {
+    "id": "biz_01",
+    "name": "QuickCart PK",
+    "stage": "Seed",
+    "industry": "E-Commerce",
+    "monthly_budget_usd": 2500,
+    "core_problem": "High customer acquisition cost (CAC) on Meta ads and poor retention after first order.",
+    "primary_goals": [
+      "Reduce CAC by 35%",
+      "Establish automated lifecycle email/SMS flows",
+      "Improve cohort 30-day retention"
+    ],
+    "required_skills": [
+      "Performance Marketing",
+      "Retention & CRM",
+      "Funnel Analytics",
+      "Growth Experimentation"
+    ],
+    "raw_founder_notes": "We are a seed-stage quick-commerce grocer in Lahore. We raised $400k and are burning too much on ads. Need an aggressive growth leader who has scaled D2C apps in emerging markets without wasting budget."
+  },
+  {
+    "id": "biz_02",
+    "name": "KisanGrow AI",
+    "stage": "Seed",
+    "industry": "AgriTech",
+    "monthly_budget_usd": 3000,
+    "core_problem": "Product delivery delays and chaotic sprint execution between data science and mobile app teams.",
+    "primary_goals": [
+      "Implement agile scrum workflows",
+      "Ship farmer-facing WhatsApp bot v2",
+      "Align data science releases with mobile builds"
+    ],
+    "required_skills": [
+      "Technical Product Management",
+      "Agile / Scrum",
+      "Cross-Functional Leadership",
+      "Mobile Product Delivery"
+    ],
+    "raw_founder_notes": "We have 45k farmers using our satellite crop app, but our developers and ML engineers are stepping on each other's toes. Need an experienced technical PM to instill discipline and unblock sprints."
+  },
+  {
+    "id": "biz_03",
+    "name": "PayFlow Financial",
+    "stage": "Growth",
+    "industry": "FinTech",
+    "monthly_budget_usd": 4000,
+    "core_problem": "Customer support response time is over 14 hours and merchant onboarding KYC process takes 5 business days.",
+    "primary_goals": [
+      "Automate merchant onboarding workflow",
+      "Reduce average resolution time to under 1 hour",
+      "Implement scalable customer ops tooling"
+    ],
+    "required_skills": [
+      "Operations Management",
+      "Customer Experience (CX)",
+      "Process Automation",
+      "FinTech Compliance"
+    ],
+    "raw_founder_notes": "Our B2B payroll and invoice payment volume is up 4x, but our manual ops and compliance checking is failing under load. We need a seasoned Head of Operations to build standard operating procedures."
+  },
+  {
+    "id": "biz_04",
+    "name": "MedLogix Diagnostics",
+    "stage": "Early/Idea",
+    "industry": "HealthTech",
+    "monthly_budget_usd": 1500,
+    "core_problem": "Struggling to validate willingness-to-pay and pricing model with independent pathology labs.",
+    "primary_goals": [
+      "Conduct 30 discovery interviews",
+      "Formulate pilot pricing packages",
+      "Secure 5 signed letters of intent (LOIs)"
+    ],
+    "required_skills": [
+      "Customer Discovery",
+      "Product Strategy",
+      "B2B Sales",
+      "Pricing Optimization"
+    ],
+    "raw_founder_notes": "We are two biomedical researchers who built an automated slide scanning device. We don't know how to price it or approach clinical lab directors. Need someone to guide commercial discovery."
+  },
+  {
+    "id": "biz_05",
+    "name": "SaaSForge PK",
+    "stage": "Seed",
+    "industry": "B2B SaaS",
+    "monthly_budget_usd": 3500,
+    "core_problem": "Zero dedicated outbound enterprise sales process; 100% reliant on word of mouth with a long sales cycle.",
+    "primary_goals": [
+      "Build outbound sales playbook",
+      "Set up Hubspot CRM pipeline",
+      "Close 3 pilot enterprise contracts"
+    ],
+    "required_skills": [
+      "B2B Enterprise Sales",
+      "Sales Pipeline Management",
+      "Outbound Prospecting",
+      "SaaS Deal Negotiation"
+    ],
+    "raw_founder_notes": "We built an internal developer tool for offshore software agencies. Founders are pure engineers. We need a sales director to build our outbound funnel and close $20k ARR accounts."
+  }
+]
