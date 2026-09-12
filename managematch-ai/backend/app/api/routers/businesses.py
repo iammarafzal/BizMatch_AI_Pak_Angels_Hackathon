@@ -4,7 +4,8 @@ from sqlalchemy.future import select
 
 from app.core.database import get_db
 from app.models.business import Business
-from app.schemas.business import BusinessResponse, AnalyzeRequirementsRequest, AnalyzeRequirementsResponse
+from app.schemas.business import BusinessResponse
+from app.schemas.match import AnalyzeRequirementsRequest, AnalyzeRequirementsResponse
 from app.services.ai_orchestrator import extract_business_requirements
 
 router = APIRouter(prefix="/businesses", tags=["Businesses"])

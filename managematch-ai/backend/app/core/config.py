@@ -1,15 +1,17 @@
-import os
+from typing import List, Union
+from pydantic import AnyHttpUrl, validator
 from pydantic_settings import BaseSettings
 
 class Settings(BaseSettings):
-    PROJECT_NAME: str = "ManageMatch AI"
-    VERSION: str = "1.0.0"
+    PROJECT_NAME: str = "BizMatch AI"
     API_V1_STR: str = "/api"
+    DATABASE_URL: str = "postgresql+asyncpg://postgres:postgres@localhost:5432/bizmatch"
+    GEMINI_API_KEY: str = ""
     
-    # SQLite by default for hackathon setup
-    DATABASE_URL: str = os.getenv("DATABASE_URL", "sqlite+aiosqlite:///./managematch.db")
-    
-    GEMINI_API_KEY: str = os.getenv("GEMINI_API_KEY", "")
+    # CORS Origins
+    CORS_ORIGINS: List[str] = ["http://localhost:3000"]
+
+    PORT: int = 8000
 
     class Config:
         env_file = ".env"
