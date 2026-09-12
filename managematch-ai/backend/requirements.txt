@@ -1,0 +1,12 @@
+fastapi>=0.110.0
+uvicorn[standard]>=0.28.0
+pydantic>=2.6.0
+pydantic-settings>=2.2.0
+sqlalchemy>=2.0.27
+SQLAlchemy-Utils>=0.41.1
+asyncpg>=0.29.0
+aiosqlite>=0.20.0
+langchain-core>=0.1.30
+langchain-google-genai>=0.0.11
+langgraph>=0.0.26
+python-dotenv>=1.0.1
