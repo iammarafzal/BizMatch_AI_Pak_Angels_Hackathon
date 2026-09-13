@@ -18,8 +18,8 @@ class Business(Base):
     goals = Column(Text, nullable=True)
     challenges = Column(Text, nullable=True)
     
-    required_skills = Column(JSON, nullable=True)
-    required_experience = Column(JSON, nullable=True)
+    required_skills = Column(JSON, nullable=True, default=list)
+    required_experience = Column(JSON, nullable=True, default=list)
     leadership_requirements = Column(Text, nullable=True)
     
     salary_budget = Column(Float, nullable=True)

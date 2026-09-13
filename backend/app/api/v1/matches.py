@@ -2,8 +2,8 @@ import uuid
 from datetime import datetime, timezone
 from typing import List, Optional, Dict, Any
 from fastapi import APIRouter, Depends, HTTPException, status
-from sqlalchemy.ext.asyncio import AsyncSession
-from sqlalchemy.future import select
+from sqlalchemy.orm import Session
+from sqlalchemy import select
 
 from app.core.database import get_db
 from app.models.business import Business
@@ -117,7 +117,7 @@ def _build_factor_template_fallback(
 async def calculate_matches(
     req: CalculateMatchesRequest,
     include_explanations: bool = False,
-    db: AsyncSession = Depends(get_db),
+    db: Session = Depends(get_db),
     current_user: User = Depends(get_current_user)
 ):
     """
@@ -136,7 +136,7 @@ async def calculate_matches(
 
     # 1. Resolve business profile
     if req.business_id:
-        result = await db.execute(select(Business).filter(Business.id == str(req.business_id)))
+        result = db.execute(select(Business).filter(Business.id == str(req.business_id)))
         business_obj = result.scalars().first()
         if not business_obj:
             raise HTTPException(
@@ -173,12 +173,12 @@ async def calculate_matches(
             work_arrangement=data.get("work_arrangement"),
         )
         db.add(business_obj)
-        await db.commit()
-        await db.refresh(business_obj)
+        db.commit()
+        db.refresh(business_obj)
         persisted_in_db = True
 
     # 2. Fetch all managers from the database
-    mgr_result = await db.execute(select(Manager))
+    mgr_result = db.execute(select(Manager))
     all_managers = mgr_result.scalars().all()
     
     if not all_managers:
@@ -256,7 +256,7 @@ async def calculate_matches(
                 created_at=datetime.now(timezone.utc)
             )
             db.add(match_rec)
-        await db.commit()
+        db.commit()
 
     return BatchMatchResponse(
         business_id=business_obj.id,
@@ -266,14 +266,14 @@ async def calculate_matches(
 
 
 @router.get("/{business_id}", response_model=List[MatchRecordResponse])
-async def get_matches_for_business(
+def get_matches_for_business(
     business_id: str,
-    db: AsyncSession = Depends(get_db)
+    db: Session = Depends(get_db)
 ):
     """
     Retrieve historical match records for a business.
     """
-    biz_result = await db.execute(select(Business).filter(Business.id == business_id))
+    biz_result = db.execute(select(Business).filter(Business.id == business_id))
     biz = biz_result.scalars().first()
     if not biz:
         raise HTTPException(
@@ -282,7 +282,7 @@ async def get_matches_for_business(
         )
 
     query = select(MatchRecord).filter(MatchRecord.business_id == business_id).order_by(MatchRecord.overall_score.desc())
-    result = await db.execute(query)
+    result = db.execute(query)
     records = result.scalars().all()
     return records
 
@@ -290,19 +290,19 @@ async def get_matches_for_business(
 @router.post("/explain", response_model=ExplainMatchResponse)
 async def explain_match(
     req: ExplainMatchRequest,
-    db: AsyncSession = Depends(get_db),
+    db: Session = Depends(get_db),
     current_user: User = Depends(get_current_user)
 ):
     """
     Generate explainable decision support card for a selected candidate.
     Accepts business_id, manager_id, and optional custom_business_context.
-    Persists results to PostgreSQL and returns full ExplainMatchResponse.
+    Persists results to SQLite and returns full ExplainMatchResponse.
     """
     biz_id_str = str(req.business_id)
     mgr_id_str = str(req.manager_id)
 
     # 1. Fetch target Manager record from DB
-    mgr_result = await db.execute(select(Manager).filter(Manager.id == mgr_id_str))
+    mgr_result = db.execute(select(Manager).filter(Manager.id == mgr_id_str))
     mgr = mgr_result.scalars().first()
     if not mgr:
         raise HTTPException(
@@ -311,7 +311,7 @@ async def explain_match(
         )
 
     # 2. Fetch target Business record from DB or use incoming transient context
-    biz_result = await db.execute(select(Business).filter(Business.id == biz_id_str))
+    biz_result = db.execute(select(Business).filter(Business.id == biz_id_str))
     biz = biz_result.scalars().first()
 
     if not biz and not req.custom_business_context:
@@ -380,13 +380,13 @@ async def explain_match(
             business_stage=biz_dict.get("stage", "Growth")
         )
 
-    # 6. Upsert or update corresponding MatchRecord in PostgreSQL for auditability
+    # 6. Upsert or update corresponding MatchRecord in SQLite for auditability
     try:
         rec_query = select(MatchRecord).filter(
             MatchRecord.business_id == biz_id_str,
             MatchRecord.manager_id == mgr_id_str
         ).order_by(MatchRecord.created_at.desc())
-        existing_rec = (await db.execute(rec_query)).scalars().first()
+        existing_rec = db.execute(rec_query).scalars().first()
 
         if existing_rec:
             existing_rec.overall_score = match_result.overall_score
@@ -398,7 +398,7 @@ async def explain_match(
             existing_rec.explanation = explanation_card["verdict"]
         else:
             # Only create new DB record if business is persisted in businesses table
-            biz_in_db = (await db.execute(select(Business).filter(Business.id == biz_id_str))).scalars().first()
+            biz_in_db = db.execute(select(Business).filter(Business.id == biz_id_str)).scalars().first()
             if biz_in_db:
                 new_rec = MatchRecord(
                     id=str(uuid.uuid4()),
@@ -414,9 +414,9 @@ async def explain_match(
                     created_at=datetime.now(timezone.utc)
                 )
                 db.add(new_rec)
-        await db.commit()
+        db.commit()
     except Exception:
-        await db.rollback()
+        db.rollback()
 
     # 7. Formulate and return ExplainMatchResponse
     mgr_title = getattr(mgr, "role_title", "") or getattr(mgr, "title", "Operations Manager")

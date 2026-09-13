@@ -2,13 +2,21 @@ import logging
 from fastapi import Request, status
 from fastapi.responses import JSONResponse
 from slowapi import Limiter
-from slowapi.util import get_remote_address
 from slowapi.errors import RateLimitExceeded
 
 logger = logging.getLogger("bizmatch.rate_limiter")
 
+def safe_get_remote_address(request: Request) -> str:
+    """Safe IP extractor that handles missing client object in ASGI/proxied requests."""
+    try:
+        if request.client and request.client.host:
+            return request.client.host
+    except Exception:
+        pass
+    return "127.0.0.1"
+
 limiter = Limiter(
-    key_func=get_remote_address,
+    key_func=safe_get_remote_address,
     default_limits=["60 per minute"]
 )
 
@@ -16,7 +24,8 @@ def custom_rate_limit_handler(request: Request, exc: RateLimitExceeded) -> JSONR
     """
     Custom 429 response handler formatted cleanly for client consumption.
     """
-    logger.warning(f"Rate limit exceeded for client IP {get_remote_address(request)} on path {request.url.path}")
+    client_ip = safe_get_remote_address(request)
+    logger.warning(f"Rate limit exceeded for client IP {client_ip} on path {request.url.path}")
     return JSONResponse(
         status_code=status.HTTP_429_TOO_MANY_REQUESTS,
         headers={"Retry-After": "60"},

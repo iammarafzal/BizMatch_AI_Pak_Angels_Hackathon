@@ -1,8 +1,8 @@
 from typing import Optional, Callable
 from fastapi import Depends, status
 from fastapi.security import OAuth2PasswordBearer
-from sqlalchemy.ext.asyncio import AsyncSession
-from sqlalchemy.future import select
+from sqlalchemy.orm import Session
+from sqlalchemy import select
 
 from app.core.database import get_db
 from app.core.auth import decode_access_token
@@ -13,7 +13,7 @@ oauth2_scheme = OAuth2PasswordBearer(tokenUrl="/api/auth/login", auto_error=Fals
 
 async def get_current_user(
     token: Optional[str] = Depends(oauth2_scheme),
-    db: AsyncSession = Depends(get_db)
+    db: Session = Depends(get_db)
 ) -> User:
     """
     Extracts Bearer token from Authorization header, validates JWT claims,
@@ -35,7 +35,7 @@ async def get_current_user(
             details="Subject claim 'sub' missing from token payload"
         )
 
-    result = await db.execute(select(User).filter(User.id == user_id))
+    result = db.execute(select(User).filter(User.id == user_id))
     user = result.scalars().first()
 
     if not user:

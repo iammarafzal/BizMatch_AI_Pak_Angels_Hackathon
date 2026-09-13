@@ -1,7 +1,7 @@
 import uuid
 from fastapi import APIRouter, Depends, status
-from sqlalchemy.ext.asyncio import AsyncSession
-from sqlalchemy.future import select
+from sqlalchemy.orm import Session
+from sqlalchemy import select
 
 from app.core.database import get_db
 from app.core.auth import hash_password, verify_password, create_access_token
@@ -13,15 +13,15 @@ from app.schemas.user import UserRegisterRequest, UserLoginRequest, UserResponse
 router = APIRouter(prefix="/auth", tags=["Authentication & Access Control"])
 
 @router.post("/register", response_model=TokenResponse, status_code=status.HTTP_201_CREATED)
-async def register_user(
+def register_user(
     payload: UserRegisterRequest,
-    db: AsyncSession = Depends(get_db)
+    db: Session = Depends(get_db)
 ):
     """
     Register a new user (FOUNDER or ADMIN) with bcrypt hashed password and issue JWT token.
     """
     # Check if email is already registered
-    existing_res = await db.execute(select(User).filter(User.email == payload.email.lower()))
+    existing_res = db.execute(select(User).filter(User.email == payload.email.lower()))
     if existing_res.scalars().first():
         raise AppException(
             status_code=status.HTTP_400_BAD_REQUEST,
@@ -42,22 +42,22 @@ async def register_user(
     )
 
     db.add(new_user)
-    await db.commit()
-    await db.refresh(new_user)
+    db.commit()
+    db.refresh(new_user)
 
     token = create_access_token(data={"sub": new_user.id, "email": new_user.email, "role": new_user.role})
     user_resp = UserResponse.model_validate(new_user)
     return TokenResponse(access_token=token, token_type="bearer", user=user_resp)
 
 @router.post("/login", response_model=TokenResponse)
-async def login_user(
+def login_user(
     payload: UserLoginRequest,
-    db: AsyncSession = Depends(get_db)
+    db: Session = Depends(get_db)
 ):
     """
     Authenticate user credentials and issue a signed JWT access token.
     """
-    result = await db.execute(select(User).filter(User.email == payload.email.lower()))
+    result = db.execute(select(User).filter(User.email == payload.email.lower()))
     user = result.scalars().first()
 
     if not user or not verify_password(payload.password, user.hashed_password):
@@ -68,7 +68,7 @@ async def login_user(
     return TokenResponse(access_token=token, token_type="bearer", user=user_resp)
 
 @router.get("/me", response_model=UserResponse)
-async def get_my_profile(current_user: User = Depends(get_current_user)):
+def get_my_profile(current_user: User = Depends(get_current_user)):
     """
     Retrieve authenticated user profile. Requires Bearer token.
     """

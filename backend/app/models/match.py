@@ -11,12 +11,12 @@ class MatchRecord(Base):
     manager_id = Column(String, ForeignKey("managers.id"), nullable=False)
     
     overall_score = Column(Float, nullable=False)
-    factor_scores = Column(JSON, nullable=False)
+    factor_scores = Column(JSON, nullable=False, default=dict)
     
-    strengths = Column(JSON, nullable=True)
-    weaknesses = Column(JSON, nullable=True)
-    risks = Column(JSON, nullable=True)
-    missing_requirements = Column(JSON, nullable=True)
+    strengths = Column(JSON, nullable=True, default=list)
+    weaknesses = Column(JSON, nullable=True, default=list)
+    risks = Column(JSON, nullable=True, default=list)
+    missing_requirements = Column(JSON, nullable=True, default=list)
     
     explanation = Column(Text, nullable=True)
     

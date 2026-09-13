@@ -1,8 +1,8 @@
 import uuid
 from typing import List
 from fastapi import APIRouter, Depends, HTTPException, status
-from sqlalchemy.ext.asyncio import AsyncSession
-from sqlalchemy.future import select
+from sqlalchemy.orm import Session
+from sqlalchemy import select
 
 from app.core.database import get_db
 from app.models.business import Business
@@ -17,9 +17,9 @@ router = APIRouter(prefix="/businesses", tags=["Businesses"])
 
 @router.post("", response_model=BusinessResponse, status_code=status.HTTP_201_CREATED, include_in_schema=False)
 @router.post("/", response_model=BusinessResponse, status_code=status.HTTP_201_CREATED)
-async def create_business(
+def create_business(
     payload: BusinessCreate,
-    db: AsyncSession = Depends(get_db),
+    db: Session = Depends(get_db),
     current_user: User = Depends(get_current_user)
 ):
     """
@@ -56,29 +56,29 @@ async def create_business(
     )
     
     db.add(new_biz)
-    await db.commit()
-    await db.refresh(new_biz)
+    db.commit()
+    db.refresh(new_biz)
     
     return new_biz
 
 @router.get("", response_model=List[BusinessResponse], include_in_schema=False)
 @router.get("/", response_model=List[BusinessResponse])
-async def get_businesses(db: AsyncSession = Depends(get_db)):
+def get_businesses(db: Session = Depends(get_db)):
     """
     Retrieve all seeded and user-created businesses.
     """
-    result = await db.execute(select(Business))
+    result = db.execute(select(Business))
     return result.scalars().all()
 
 @router.get("/{business_id}", response_model=BusinessResponse)
-async def get_business_by_id(
+def get_business_by_id(
     business_id: str,
-    db: AsyncSession = Depends(get_db)
+    db: Session = Depends(get_db)
 ):
     """
     Retrieve a single business profile by ID.
     """
-    result = await db.execute(select(Business).filter(Business.id == business_id))
+    result = db.execute(select(Business).filter(Business.id == business_id))
     biz = result.scalars().first()
     if not biz:
         raise HTTPException(
@@ -88,7 +88,7 @@ async def get_business_by_id(
     return biz
 
 @router.post("/analyze-requirements", response_model=AnalyzeRequirementsResponse)
-async def analyze_requirements(req: AnalyzeRequirementsRequest):
+def analyze_requirements(req: AnalyzeRequirementsRequest):
     """
     Parse unstructured business goals and challenges into structured requirements.
     """

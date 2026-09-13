@@ -1,7 +1,7 @@
 from datetime import datetime, timezone
 from fastapi import APIRouter, Depends, HTTPException, status
-from sqlalchemy.ext.asyncio import AsyncSession
-from sqlalchemy.future import select
+from sqlalchemy.orm import Session
+from sqlalchemy import select
 from typing import List
 
 from app.core.database import get_db
@@ -20,14 +20,14 @@ router = APIRouter(prefix="/matches", tags=["Matches"])
 @router.post("/calculate", response_model=CalculateMatchesResponse)
 async def calculate_matches(
     req: CalculateMatchesRequest,
-    db: AsyncSession = Depends(get_db)
+    db: Session = Depends(get_db)
 ):
-    biz_result = await db.execute(select(Business).filter(Business.id == req.business_id))
+    biz_result = db.execute(select(Business).filter(Business.id == req.business_id))
     biz = biz_result.scalars().first()
     if not biz:
         raise HTTPException(status_code=404, detail="Business not found")
         
-    mgr_result = await db.execute(select(Manager))
+    mgr_result = db.execute(select(Manager))
     managers = mgr_result.scalars().all()
     
     engine = ScoringEngine()
@@ -49,12 +49,12 @@ async def calculate_matches(
 @router.post("/explain", response_model=ExplainMatchResponse)
 async def explain_match(
     req: ExplainMatchRequest,
-    db: AsyncSession = Depends(get_db)
+    db: Session = Depends(get_db)
 ):
-    biz_result = await db.execute(select(Business).filter(Business.id == req.business_id))
+    biz_result = db.execute(select(Business).filter(Business.id == req.business_id))
     biz = biz_result.scalars().first()
     
-    mgr_result = await db.execute(select(Manager).filter(Manager.id == req.manager_id))
+    mgr_result = db.execute(select(Manager).filter(Manager.id == req.manager_id))
     mgr = mgr_result.scalars().first()
     
     if not biz or not mgr:

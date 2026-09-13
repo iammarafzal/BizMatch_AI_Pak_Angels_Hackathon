@@ -1,9 +1,9 @@
 # BizMatch AI — Explainable Executive Matching Engine
 
 [![Pak Angels Hackathon 2026](https://img.shields.io/badge/Pak%20Angels-Hackathon%202026-emerald?style=for-the-badge)](https://github.com/iammarafzal/BizMatch_AI_Pak_Angels_Hackathon)
-[![Backend](https://img.shields.io/badge/FastAPI-0.109-009688?style=for-the-badge&logo=fastapi)](https://fastapi.tiangolo.com/)
+[![Backend](https://img.shields.io/badge/FastAPI-0.110+-009688?style=for-the-badge&logo=fastapi)](https://fastapi.tiangolo.com/)
 [![Frontend](https://img.shields.io/badge/Next.js-14_App_Router-000000?style=for-the-badge&logo=next.js)](https://nextjs.org/)
-[![Database](https://img.shields.io/badge/PostgreSQL-15+-4169E1?style=for-the-badge&logo=postgresql)](https://www.postgresql.org/)
+[![Database](https://img.shields.io/badge/SQLite-Zero_Config-003B57?style=for-the-badge&logo=sqlite)](https://www.sqlite.org/)
 [![AI Infrastructure](https://img.shields.io/badge/LangChain_%7C_LangGraph-Gemini_2.5-412991?style=for-the-badge)](https://python.langchain.com/)
 
 > **BizMatch AI** is a high-velocity, explainable decision-support platform that connects early-stage startups and high-growth businesses with vetted fractional and full-time executive leaders (Operations, Product, Tech, Growth).
@@ -18,6 +18,7 @@
 - **🤖 LangGraph Explainability & Responsible AI Audit**: StateGraph workflow producing structured decision support cards containing strengths, trade-off concerns, missing requirements, and verdicts, sanitized against demographic bias.
 - **🔐 Enterprise Security & Auth**: Standard JWT access tokens, bcrypt password hashing, Role-Based Access Control (RBAC: `FOUNDER`, `ADMIN`), SlowAPI rate limiting (60 req/min), and security headers (`X-Content-Type-Options: nosniff`, `X-Frame-Options: DENY`, `Strict-Transport-Security`, `X-Request-ID`, `X-Process-Time`).
 - **⚡ One-Click Demo Preset**: Instant preset hydration for **FashionCart** ($2,000/mo budget) matching against benchmark candidates like **Sarah Khan** (Operations Lead, 92.8% match).
+- **💾 Zero-Dependency SQLite Integration**: Instant cloning and zero-configuration database setup (`sqlite:///./bizmatch.db`) with automatic table creation and startup auto-seeding.
 
 ---
 
@@ -39,7 +40,7 @@ flowchart TD
     DualKeyManager -->|Fallback KEY_2| Gemini2[Gemini 2.5 Flash Secondary]
     DualKeyManager -->|Double Fail Fallback| DeterministicEngine[Score-Grounded Fallback Engine]
     
-    Matcher --> DB[(PostgreSQL Database)]
+    Matcher --> DB[(SQLite Database - bizmatch.db)]
     Explainer --> DB
 ```
 
@@ -48,7 +49,7 @@ flowchart TD
 ## 🛠️ Tech Stack
 
 - **Backend Framework**: Python 3.11+, FastAPI, Uvicorn, Pydantic V2
-- **Database & ORM**: PostgreSQL, SQLAlchemy 2.0 (AsyncIO), Asyncpg
+- **Database & ORM**: SQLite (Native Zero-Dependency), SQLAlchemy 2.0
 - **AI Orchestration**: LangChain, LangGraph StateGraph, Google Gemini 2.5 Flash
 - **Frontend Framework**: Next.js 14 (App Router), React, TailwindCSS, Lucide Icons
 - **Security & Reliability**: JWT (PyJWT), bcrypt, SlowAPI, CORS Middleware, Custom Logging & Security Middleware
@@ -61,7 +62,7 @@ flowchart TD
 ### Prerequisites
 - **Python 3.11+**
 - **Node.js 18+** & `npm`
-- **PostgreSQL** running locally on port `5432`
+- **Zero Database Server Setup**: Native SQLite is built into Python!
 
 ---
 
@@ -90,7 +91,7 @@ cp .env.example .env
 ```env
 PROJECT_NAME="BizMatch AI"
 API_V1_STR="/api"
-DATABASE_URL="postgresql+asyncpg://postgres:postgres@localhost:5432/bizmatch"
+DATABASE_URL="sqlite:///./bizmatch.db"
 
 GEMINI_API_KEY_1="your_primary_gemini_api_key"
 GEMINI_API_KEY_2="your_secondary_gemini_api_key"
@@ -100,15 +101,20 @@ ALGORITHM="HS256"
 ACCESS_TOKEN_EXPIRE_MINUTES=60
 ```
 
-#### Seed Database
+#### Database Seeding *(Automatic on Boot)*
+> The server automatically creates all database tables and seeds candidate managers on application boot if empty.
 ```bash
-# Seed candidate managers, business profiles, and demo users
-python app/scripts/seed.py --reset
+# Optional: Force reset and re-seed all candidate managers and businesses:
+python seed.py --reset
 ```
 
 #### Run Backend Server
 ```bash
-uvicorn main:app --reload --port 8000
+uvicorn app.main:app --reload --port 8000
+```
+*or via python:*
+```bash
+python main.py
 ```
 - API Base URL: `http://localhost:8000`
 - Swagger UI Documentation: `http://localhost:8000/docs`
@@ -187,7 +193,7 @@ Run the backend verification suite to validate system integrity:
 ```bash
 cd backend
 
-# 1. Run Complete Pytest Suite (19/19 Unit & Integration Tests)
+# 1. Run Complete Pytest Suite
 python -m pytest tests/ -v
 
 # 2. Live API Endpoint QA Suite
@@ -198,24 +204,6 @@ python scripts/verify_security_and_resilience.py
 
 # 4. End-to-End 5-Step Demo Journey Validation
 python scripts/verify_e2e.py
-```
-
-### Verification Suite Results Summary
-```text
-=========================================================================================================
-  BIZMATCH AI - END-TO-END VALIDATION & DEMO READINESS REPORT
-=========================================================================================================
-STEP   | ENDPOINT / ACTION                | LATENCY    | STATUS   | KEY ASSERTION / OUTCOME
----------------------------------------------------------------------------------------------------------
-1      | GET /health                      |     5.9ms | PASS     | API service healthy & responding
-2      | GET /api/demo/fashioncart        |    42.7ms | PASS     | Instant preset hydration loaded under 1 sec
-3      | POST /api/analyze-requirements   |     9.2ms | PASS     | Extracted 5 core skills & 4 priorities
-4      | POST /api/matches/calculate      |   239.2ms | PASS     | Sarah Khan #1 (92.8%) > Maria (84.8%) > Ali (65.9%)
-5      | POST /api/matches/explain        |   257.0ms | PASS     | Verified 3 strengths, 1 concern, verdict, & zero demographic bias
-6      | Candidate Comparison Table       |     0.0ms | PASS     | All candidates possess uniform 6-factor breakdowns ready for Next.js
----------------------------------------------------------------------------------------------------------
-  OVERALL RESULT: [SUCCESS] ALL END-TO-END DEMO JOURNEY CHECKS PASSED PERFECTLY!
-=========================================================================================================
 ```
 
 ---

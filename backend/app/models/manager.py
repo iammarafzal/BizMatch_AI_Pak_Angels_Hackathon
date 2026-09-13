@@ -11,13 +11,13 @@ class Manager(Base):
     title = Column(String, nullable=False)
     
     years_experience = Column(Float, nullable=True)
-    industries = Column(JSON, nullable=True)
-    skills = Column(JSON, nullable=True)
-    previous_roles = Column(JSON, nullable=True)
+    industries = Column(JSON, nullable=True, default=list)
+    skills = Column(JSON, nullable=True, default=list)
+    previous_roles = Column(JSON, nullable=True, default=list)
     
     management_experience = Column(Text, nullable=True)
     leadership_score = Column(Float, nullable=True)
-    achievements = Column(JSON, nullable=True)
+    achievements = Column(JSON, nullable=True, default=list)
     
     salary_expectation = Column(Float, nullable=True)
     availability = Column(String, nullable=True)

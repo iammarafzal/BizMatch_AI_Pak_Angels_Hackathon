@@ -24,7 +24,7 @@ class GeminiClientManager:
         self.secondary_llm: Optional[ChatGoogleGenerativeAI] = self._create_llm_instance(self.key2, "Secondary (KEY_2)")
 
     def _create_llm_instance(self, api_key: str, label: str) -> Optional[ChatGoogleGenerativeAI]:
-        if not api_key or api_key in ("test_key", "dummy_key", "test_key_primary", "test_key_secondary"):
+        if not self.is_key_valid(api_key):
             logger.info(f"Gemini API key for {label} is unconfigured or in test mode.")
             return None
         try:
@@ -38,7 +38,10 @@ class GeminiClientManager:
             return None
 
     def is_key_valid(self, api_key: str) -> bool:
-        return bool(api_key) and api_key not in ("test_key", "dummy_key", "test_key_primary", "test_key_secondary")
+        if not api_key:
+            return False
+        invalid_patterns = ("test_key", "dummy_key", "your_", "placeholder", "xxx")
+        return not any(pat in api_key.lower() for pat in invalid_patterns)
 
     async def execute_with_failover(
         self,

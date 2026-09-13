@@ -1,12 +1,11 @@
 import os
 import sys
 import json
-import asyncio
 import argparse
 import uuid
-from typing import Dict, Any, Tuple
-from sqlalchemy import select
-from app.core.database import engine, AsyncSessionLocal, Base
+from typing import Dict, Any
+from sqlalchemy import select, func
+from app.core.database import engine, SessionLocal, Base
 from app.models.business import Business
 from app.models.manager import Manager
 from app.models.match import MatchRecord
@@ -28,18 +27,18 @@ def find_fixture_path(filename: str) -> str:
             return normalized
     raise FileNotFoundError(f"Fixture file '{filename}' could not be located in any known data directory.")
 
-async def seed_database(reset: bool = False) -> Dict[str, Any]:
+def seed_database(reset: bool = False) -> Dict[str, Any]:
     """
-    Seed the PostgreSQL database with managers, businesses, and default demo user fixtures.
+    Seed the SQLite database with managers, businesses, and default demo user fixtures.
     Idempotent: skips records that already exist by ID.
     If reset=True, drops and recreates all tables before seeding.
     """
-    async with engine.begin() as conn:
-        if reset:
-            print("[INFO] Reset mode active: dropping all existing database tables...")
-            await conn.run_sync(Base.metadata.drop_all)
-        # Ensure tables exist
-        await conn.run_sync(Base.metadata.create_all)
+    if reset:
+        print("[INFO] Reset mode active: dropping all existing database tables...")
+        Base.metadata.drop_all(bind=engine)
+    
+    # Ensure tables exist
+    Base.metadata.create_all(bind=engine)
 
     managers_path = find_fixture_path("managers.json")
     businesses_path = find_fixture_path("businesses.json")
@@ -55,9 +54,9 @@ async def seed_database(reset: bool = False) -> Dict[str, Any]:
     seeded_businesses = 0
     skipped_businesses = 0
 
-    async with AsyncSessionLocal() as session:
+    with SessionLocal() as session:
         # Check existing businesses
-        biz_result = await session.execute(select(Business.id))
+        biz_result = session.execute(select(Business.id))
         existing_biz_ids = set(biz_result.scalars().all())
 
         for b_data in businesses_data:
@@ -88,7 +87,7 @@ async def seed_database(reset: bool = False) -> Dict[str, Any]:
             seeded_businesses += 1
 
         # Check existing managers
-        mgr_result = await session.execute(select(Manager.id))
+        mgr_result = session.execute(select(Manager.id))
         existing_mgr_ids = set(mgr_result.scalars().all())
 
         for m_data in managers_data:
@@ -118,7 +117,7 @@ async def seed_database(reset: bool = False) -> Dict[str, Any]:
             seeded_managers += 1
 
         # Seed default demo users if not present
-        user_result = await session.execute(select(User.email))
+        user_result = session.execute(select(User.email))
         existing_user_emails = set(user_result.scalars().all())
 
         demo_users = [
@@ -135,7 +134,7 @@ async def seed_database(reset: bool = False) -> Dict[str, Any]:
                 )
                 session.add(new_u)
 
-        await session.commit()
+        session.commit()
 
     total_businesses = seeded_businesses + skipped_businesses
     total_managers = seeded_managers + skipped_managers
@@ -156,6 +155,15 @@ async def seed_database(reset: bool = False) -> Dict[str, Any]:
         "reset": reset,
     }
 
+def auto_seed_if_empty():
+    """Auto-seed database on application startup if Manager table count is 0."""
+    with SessionLocal() as session:
+        manager_count = session.scalar(select(func.count()).select_from(Manager))
+    
+    if manager_count == 0:
+        print("[INFO] Manager table is empty. Running auto-seeder...")
+        seed_database(reset=False)
+
 def main():
     parser = argparse.ArgumentParser(description="BizMatch AI Database Seeder")
     parser.add_argument(
@@ -164,7 +172,7 @@ def main():
         help="Drop and recreate all database tables before seeding fixtures."
     )
     args = parser.parse_args()
-    asyncio.run(seed_database(reset=args.reset))
+    seed_database(reset=args.reset)
 
 if __name__ == "__main__":
     main()

@@ -1,31 +1,32 @@
-from sqlalchemy.ext.asyncio import create_async_engine, async_sessionmaker, AsyncSession
-from sqlalchemy.orm import declarative_base
+from sqlalchemy import create_engine, event
+from sqlalchemy.engine import Engine
+from sqlalchemy.orm import sessionmaker, declarative_base, Session
 
 from .config import settings
 
-from sqlalchemy.pool import NullPool
+connect_args = {"check_same_thread": False} if settings.DATABASE_URL.startswith("sqlite") else {}
 
-engine = create_async_engine(
+engine = create_engine(
     settings.DATABASE_URL,
-    echo=False,
-    pool_pre_ping=True,
-    poolclass=NullPool
+    connect_args=connect_args,
+    echo=False
 )
 
-AsyncSessionLocal = async_sessionmaker(
-    bind=engine, 
-    class_=AsyncSession,
-    autoflush=False, 
-    autocommit=False,
-    expire_on_commit=False
-)
+@event.listens_for(Engine, "connect")
+def set_sqlite_pragma(dbapi_connection, connection_record):
+    if settings.DATABASE_URL.startswith("sqlite"):
+        cursor = dbapi_connection.cursor()
+        cursor.execute("PRAGMA foreign_keys=ON")
+        cursor.close()
+
+SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 
 Base = declarative_base()
 
-async def get_db():
+def get_db():
     """FastAPI dependency to get a database session."""
-    async with AsyncSessionLocal() as session:
-        try:
-            yield session
-        finally:
-            await session.close()
+    db = SessionLocal()
+    try:
+        yield db
+    finally:
+        db.close()

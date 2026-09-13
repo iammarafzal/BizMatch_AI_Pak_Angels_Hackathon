@@ -8,7 +8,7 @@ from sqlalchemy.future import select
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 from main import app
-from app.core.database import AsyncSessionLocal
+from app.core.database import SessionLocal
 from app.models.match import MatchRecord
 
 
@@ -64,15 +64,15 @@ async def test_explain_endpoint_sarah_khan():
 
 
 async def test_database_persistence_of_explanation():
-    """Verify that MatchRecord in PostgreSQL persists explanation, strengths, weaknesses, and risks."""
+    """Verify that MatchRecord in SQLite persists explanation, strengths, weaknesses, and risks."""
     print("\n--- 2. Testing MatchRecord Database Upsert & Persistence ---")
-    async with AsyncSessionLocal() as session:
+    with SessionLocal() as session:
         query = select(MatchRecord).filter(
             MatchRecord.business_id == "biz-fashioncart",
             MatchRecord.manager_id == "mgr-sarah-khan"
         ).order_by(MatchRecord.created_at.desc())
         
-        result = await session.execute(query)
+        result = session.execute(query)
         rec = result.scalars().first()
         
         assert rec is not None, "MatchRecord was not persisted in PostgreSQL database"
