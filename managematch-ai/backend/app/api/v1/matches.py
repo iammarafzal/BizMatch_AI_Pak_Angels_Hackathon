@@ -20,7 +20,7 @@ from app.schemas.match import (
     MatchRecordResponse,
 )
 from app.engine.matcher import rank_managers_for_business, calculate_match
-from app.services.ai_orchestrator import generate_match_explanation
+from app.services.ai import run_explainability_pipeline
 
 router = APIRouter(prefix="/matches", tags=["Matches"])
 
@@ -178,31 +178,44 @@ async def explain_match(
 
     match_result = calculate_match(biz, mgr)
 
-    goals = getattr(biz, "goals", None) or getattr(biz, "primary_goals", [])
-    if isinstance(goals, str):
-        goals = [goals]
-
     biz_dict = {
+        "id": biz.id,
         "name": biz.name,
         "industry": biz.industry,
         "stage": biz.stage,
-        "goals": goals,
-        "skills": getattr(biz, "required_skills", []) or []
+        "size": getattr(biz, "size", None),
+        "location": getattr(biz, "location", None),
+        "salary_budget": float(getattr(biz, "salary_budget", 0.0) or getattr(biz, "monthly_budget_usd", 0.0) or 0.0),
+        "goals": getattr(biz, "goals", "") or " ".join(getattr(biz, "primary_goals", []) or []),
+        "challenges": getattr(biz, "challenges", "") or getattr(biz, "core_problem", ""),
+        "required_skills": getattr(biz, "required_skills", []) or [],
+        "required_experience": getattr(biz, "required_experience", []) or [],
+        "leadership_requirements": getattr(biz, "leadership_requirements", None),
+        "work_arrangement": getattr(biz, "work_arrangement", None),
     }
 
     mgr_dict = {
+        "id": mgr.id,
         "name": mgr.name,
-        "title": getattr(mgr, "title", None) or getattr(mgr, "role_title", ""),
+        "role_title": getattr(mgr, "role_title", "") or getattr(mgr, "title", ""),
+        "experience_years": getattr(mgr, "experience_years", 0),
+        "expected_salary": float(getattr(mgr, "expected_salary", 0.0) or 0.0),
+        "work_arrangement": getattr(mgr, "work_arrangement", None),
+        "location": getattr(mgr, "location", None),
         "industries": getattr(mgr, "industries", []) or [],
-        "stages": getattr(mgr, "verified_stages", None) or getattr(mgr, "industries", []),
-        "skills": getattr(mgr, "skills", None) or getattr(mgr, "core_skills", []),
-        "experience": getattr(mgr, "management_experience", None) or getattr(mgr, "verified_track_record", "")
+        "skills": getattr(mgr, "skills", []) or getattr(mgr, "core_skills", []),
+        "previous_roles": getattr(mgr, "previous_roles", []) or [],
+        "achievements": getattr(mgr, "achievements", []) or [],
+        "verified_stages": getattr(mgr, "verified_stages", []) or [],
+        "bio": getattr(mgr, "bio", ""),
+        "verified_track_record": getattr(mgr, "verified_track_record", "") or getattr(mgr, "management_experience", ""),
     }
 
-    analysis = await generate_match_explanation(
+    analysis = await run_explainability_pipeline(
         business=biz_dict,
         manager=mgr_dict,
-        scores=match_result.factor_scores
+        factor_scores=match_result.factor_scores,
+        overall_score=match_result.overall_score
     )
 
     return ExplainMatchResponse(success=True, data=analysis)

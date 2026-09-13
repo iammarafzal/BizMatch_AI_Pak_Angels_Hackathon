@@ -55,8 +55,13 @@ class FactorScores(BaseModel):
 class QualitativeAnalysis(BaseModel):
     strengths: List[str]
     concerns: List[str]
-    missing_requirements: List[str]
+    missing_requirements: List[str] = Field(default_factory=list)
     verdict: str
+    manager_id: Optional[str] = None
+    overall_score: Optional[float] = None
+    factor_scores: Optional[Dict[str, float]] = None
+
+    model_config = ConfigDict(extra="allow")
 
 class MatchRecordBase(BaseModel):
     business_id: str
@@ -96,4 +101,4 @@ class ExplainMatchRequest(BaseModel):
 
 class ExplainMatchResponse(BaseModel):
     success: bool
-    data: QualitativeAnalysis
+    data: Union[QualitativeAnalysis, Dict[str, Any]]

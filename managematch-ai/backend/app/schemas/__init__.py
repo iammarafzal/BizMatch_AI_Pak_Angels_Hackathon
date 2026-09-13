@@ -7,3 +7,4 @@ from .match import (
     ExplainMatchRequest, ExplainMatchResponse,
     QualitativeAnalysis, FactorScores
 )
+from .explanation import MatchExplanation, ExplanationCard

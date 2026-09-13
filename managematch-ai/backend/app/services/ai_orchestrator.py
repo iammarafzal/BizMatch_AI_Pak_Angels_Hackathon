@@ -99,28 +99,17 @@ builder.add_edge("generate_explanation", "audit_and_format")
 builder.add_edge("audit_and_format", END)
 explainability_graph = builder.compile()
 
+from app.services.ai.explainer_graph import run_explainability_pipeline
+
 async def generate_match_explanation(business: dict, manager: dict, scores: dict) -> QualitativeAnalysis:
-    try:
-        result = await explainability_graph.ainvoke({
-            "business_profile": business,
-            "manager_profile": manager,
-            "factor_scores": scores
-        })
-        return result["final_output"]
-    except Exception as exc:
-        # Fallback decision card if LLM API is unavailable in local testing
-        industries = manager.get("industries", [])
-        skills = manager.get("skills", [])
-        return QualitativeAnalysis(
-            strengths=[
-                f"Candidate brings verified operational experience in {', '.join(industries[:2]) if industries else 'relevant industries'}.",
-                f"Core skill alignment in {', '.join(skills[:3]) if skills else 'operational leadership'} directly targets business objectives."
-            ],
-            concerns=[
-                "Verify specific cross-functional remote collaboration cadence and team communication rhythms."
-            ],
-            missing_requirements=[
-                "Confirm hands-on tooling proficiency with company-specific ERP and CRM software."
-            ],
-            verdict=f"Candidate has strong factor alignment ({scores.get('skills', 80)}% skill fit) for {business.get('stage', 'Growth')} stage milestones."
-        )
+    overall = float(scores.get("overall", 85.0) if isinstance(scores, dict) else 85.0)
+    res = await run_explainability_pipeline(business, manager, scores, overall)
+    return QualitativeAnalysis(
+        strengths=res["strengths"],
+        concerns=res["concerns"],
+        missing_requirements=res.get("missing_requirements", []),
+        verdict=res["verdict"],
+        manager_id=res.get("manager_id"),
+        overall_score=res.get("overall_score"),
+        factor_scores=res.get("factor_scores")
+    )
