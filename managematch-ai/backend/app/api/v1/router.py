@@ -1,5 +1,10 @@
 from fastapi import APIRouter
+from .businesses import router as businesses_router
+from .managers import router as managers_router
+from .matches import router as matches_router
 
 api_router = APIRouter()
 
-# For Task 1, we just initialize the router. Future tasks will mount the sub-routers here.
+api_router.include_router(businesses_router)
+api_router.include_router(managers_router)
+api_router.include_router(matches_router)
