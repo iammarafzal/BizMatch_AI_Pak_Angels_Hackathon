@@ -1,0 +1,137 @@
+[
+  {
+    "id": "biz-fashioncart",
+    "name": "FashionCart",
+    "industry": "E-commerce",
+    "size": "Small",
+    "stage": "Growth",
+    "location": "Lahore, Pakistan",
+    "employee_count": 12,
+    "business_model": "Online Retail",
+    "goals": "We want to double our revenue within the next 12 months and expand our operations.",
+    "challenges": "Our orders have increased significantly, but our fulfillment process is disorganized and our employees don't have clearly defined responsibilities.",
+    "required_skills": [
+      "Operations Management",
+      "Team Management",
+      "Process Optimization",
+      "Supply Chain",
+      "E-commerce"
+    ],
+    "required_experience": [
+      "E-commerce domain experience",
+      "Fulfillment and warehouse operations",
+      "Cross-functional team management"
+    ],
+    "leadership_requirements": "Must possess strong team leadership to reorganize a 12-person operations team and establish clear accountability and standard operating procedures (SOPs).",
+    "salary_budget": 2000.0,
+    "work_arrangement": "Remote/Hybrid"
+  },
+  {
+    "id": "biz-cloudpulse",
+    "name": "CloudPulse Analytics",
+    "industry": "B2B SaaS",
+    "size": "Startup",
+    "stage": "Seed",
+    "location": "Islamabad, Pakistan",
+    "employee_count": 8,
+    "business_model": "Subscription Software",
+    "goals": "Accelerate product release cadence, roll out enterprise tier, and reduce customer churn by 30%.",
+    "challenges": "Engineering sprints are chaotic without structured prioritization or product roadmaps, causing delays in enterprise client deliverables.",
+    "required_skills": [
+      "Technical Product Management",
+      "Agile / Scrum",
+      "Roadmap Strategy",
+      "Systems Architecture",
+      "Cross-functional Leadership"
+    ],
+    "required_experience": [
+      "B2B SaaS technical product management",
+      "Sprint cadence governance",
+      "Customer discovery and prioritization"
+    ],
+    "leadership_requirements": "Experienced technical product leader who can bridge engineering and commercial teams and institute agile discipline.",
+    "salary_budget": 2400.0,
+    "work_arrangement": "Remote"
+  },
+  {
+    "id": "biz-swiftroute",
+    "name": "SwiftRoute Logistics",
+    "industry": "Logistics",
+    "size": "Medium",
+    "stage": "Growth",
+    "location": "Karachi, Pakistan",
+    "employee_count": 25,
+    "business_model": "B2B Freight & Last-Mile Delivery",
+    "goals": "Scale last-mile delivery network across 3 new metropolitan hubs while maintaining 98% on-time delivery.",
+    "challenges": "High fuel and fleet dispatch expenses, inconsistent driver routing, and lack of unified warehouse SOPs causing delivery bottlenecks.",
+    "required_skills": [
+      "Supply Chain Optimization",
+      "Fleet Dispatch",
+      "Warehouse Management",
+      "Route Optimization",
+      "Vendor Negotiation"
+    ],
+    "required_experience": [
+      "Fleet and dispatch operations",
+      "Supply chain network expansion",
+      "Hub and warehouse management"
+    ],
+    "leadership_requirements": "Hands-on operations director capable of managing dispatch coordinators and driver fleets under high-volume pressure.",
+    "salary_budget": 2200.0,
+    "work_arrangement": "Hybrid"
+  },
+  {
+    "id": "biz-healthbridge",
+    "name": "HealthBridge Systems",
+    "industry": "Healthcare",
+    "size": "Startup",
+    "stage": "Seed",
+    "location": "Islamabad, Pakistan",
+    "employee_count": 10,
+    "business_model": "Telehealth & Clinic Management Platform",
+    "goals": "Onboard 50 outpatient clinics onto remote care software while achieving 100% regulatory data privacy compliance.",
+    "challenges": "Clinical workflows are manual and unstandardized, onboarding takes 3 weeks per clinic, and patient data management needs strict compliance auditing.",
+    "required_skills": [
+      "Healthcare Operations",
+      "Regulatory Compliance",
+      "Clinical Workflow Design",
+      "Patient Data Privacy",
+      "Cross-functional Leadership"
+    ],
+    "required_experience": [
+      "Digital healthcare operations",
+      "Health regulatory compliance",
+      "Clinical onboarding workflow design"
+    ],
+    "leadership_requirements": "Detail-oriented healthcare leader capable of translating complex regulatory mandates into operational team workflows.",
+    "salary_budget": 2500.0,
+    "work_arrangement": "Remote/Hybrid"
+  },
+  {
+    "id": "biz-paystream",
+    "name": "PayStream Global",
+    "industry": "FinTech",
+    "size": "Small",
+    "stage": "Growth",
+    "location": "Karachi, Pakistan",
+    "employee_count": 18,
+    "business_model": "Cross-Border Payments Infrastructure",
+    "goals": "Triple cross-border payout volume while reducing fraudulent transactions and shortening merchant onboarding to under 6 hours.",
+    "challenges": "Manual compliance checks cause a 4-day onboarding backlog, leading to high abandonment rates for mid-market merchants.",
+    "required_skills": [
+      "FinTech Compliance",
+      "AML / KYC",
+      "Risk Management",
+      "Process Automation",
+      "Operations Management"
+    ],
+    "required_experience": [
+      "FinTech risk and fraud operations",
+      "Automated merchant underwriting",
+      "Banking compliance and regulatory oversight"
+    ],
+    "leadership_requirements": "Operational manager with strong compliance acumen to lead risk analysts and automate onboarding pipelines.",
+    "salary_budget": 2800.0,
+    "work_arrangement": "Hybrid"
+  }
+]

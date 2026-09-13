@@ -1,0 +1,576 @@
+[
+  {
+    "id": "mgr-sarah-khan",
+    "name": "Sarah Khan",
+    "title": "Operations & Supply Chain Manager",
+    "years_experience": 5.0,
+    "industries": [
+      "E-commerce",
+      "Retail"
+    ],
+    "skills": [
+      "Operations Management",
+      "Team Management",
+      "Supply Chain",
+      "Process Optimization",
+      "Inventory Management",
+      "Fulfillment Logistics"
+    ],
+    "previous_roles": [
+      "Operations Lead at RetailSphere",
+      "Assistant Supply Chain Manager at ShopDirect"
+    ],
+    "management_experience": "Managed a cross-functional fulfillment and customer support team of 15 members across warehouse and dispatch operations.",
+    "leadership_score": 90.0,
+    "achievements": [
+      "Streamlined order dispatch workflow, reducing order fulfillment turnaround by 42% and eliminating dispatch backlogs.",
+      "Implemented standard operating procedures (SOPs) across inventory handling, reducing inventory variance to below 0.5%.",
+      "Led weekly KPI reviews and performance coaching for a 15-person warehouse team, boosting retention by 35%."
+    ],
+    "salary_expectation": 1800.0,
+    "availability": "Available",
+    "location": "Lahore, Pakistan",
+    "work_preference": "Remote/Hybrid"
+  },
+  {
+    "id": "mgr-ali-ahmed",
+    "name": "Ali Ahmed",
+    "title": "Director of Operations & Supply Chain",
+    "years_experience": 11.0,
+    "industries": [
+      "Corporate Retail",
+      "Logistics",
+      "E-commerce"
+    ],
+    "skills": [
+      "Executive Leadership",
+      "Supply Chain Architecture",
+      "Process Optimization",
+      "P&L Management",
+      "Cross-functional Leadership",
+      "Operations Strategy"
+    ],
+    "previous_roles": [
+      "Head of Logistics at MegaCorp Distribution",
+      "Senior Operations Manager at OmniRetail"
+    ],
+    "management_experience": "Executive leadership of 60+ full-time personnel across 4 distribution centers and corporate operational divisions.",
+    "leadership_score": 94.0,
+    "achievements": [
+      "Oversaw $15M regional supply chain budget, lowering annual operational burn by 18% through vendor consolidation.",
+      "Designed centralized procurement ERP workflow adopted across 22 regional retail outlets.",
+      "Mentored 8 senior department heads and established company-wide operational OKR frameworks."
+    ],
+    "salary_expectation": 2600.0,
+    "availability": "2 weeks notice",
+    "location": "Karachi, Pakistan",
+    "work_preference": "Hybrid"
+  },
+  {
+    "id": "mgr-maria-james",
+    "name": "Maria James",
+    "title": "Growth & Product Operations Lead",
+    "years_experience": 6.0,
+    "industries": [
+      "E-commerce",
+      "Marketplaces",
+      "SaaS"
+    ],
+    "skills": [
+      "Product Operations",
+      "Scaling",
+      "Process Optimization",
+      "Team Management",
+      "E-commerce",
+      "Growth Strategy"
+    ],
+    "previous_roles": [
+      "Product Operations Manager at MarketHub",
+      "Growth Operations Specialist at CartFlow"
+    ],
+    "management_experience": "Led a high-velocity team of 10 operations coordinators and product analysts across scaling initiatives.",
+    "leadership_score": 87.0,
+    "achievements": [
+      "Scaled marketplace merchant onboarding from 50 to 500 sellers monthly while cutting onboarding turnaround from 7 days to 24 hours.",
+      "Built automated operational dashboards tracking fulfillment cycle times, improving customer CSAT by 28 points.",
+      "Designed inter-departmental feedback loops between product engineers and front-line customer operations."
+    ],
+    "salary_expectation": 2000.0,
+    "availability": "Available",
+    "location": "Islamabad, Pakistan",
+    "work_preference": "Remote/Hybrid"
+  },
+  {
+    "id": "mgr-hassan-raza",
+    "name": "Hassan Raza",
+    "title": "Technical Product Manager",
+    "years_experience": 7.0,
+    "industries": [
+      "B2B SaaS",
+      "Developer Tools",
+      "Cloud Infrastructure"
+    ],
+    "skills": [
+      "Technical Product Management",
+      "Agile / Scrum",
+      "Roadmap Strategy",
+      "Systems Architecture",
+      "Cross-functional Leadership"
+    ],
+    "previous_roles": [
+      "Lead Product Manager at CloudStack",
+      "Systems Analyst & PM at DevFlow"
+    ],
+    "management_experience": "Managed product lifecycle across 3 engineering squads totaling 18 software engineers and designers.",
+    "leadership_score": 86.0,
+    "achievements": [
+      "Delivered enterprise API platform on time across 4 quarters, increasing enterprise client retention to 94%.",
+      "Transitioned engineering organization from ad-hoc releases to 2-week bi-weekly CI/CD sprint cadences, reducing bug escapes by 50%."
+    ],
+    "salary_expectation": 2200.0,
+    "availability": "Immediate",
+    "location": "Lahore, Pakistan",
+    "work_preference": "Remote"
+  },
+  {
+    "id": "mgr-john-smith",
+    "name": "John Smith",
+    "title": "Logistics & Fleet Operations Director",
+    "years_experience": 8.0,
+    "industries": [
+      "Logistics",
+      "Freight & Transport",
+      "Supply Chain"
+    ],
+    "skills": [
+      "Supply Chain Optimization",
+      "Fleet Dispatch",
+      "Warehouse Management",
+      "Route Optimization",
+      "Vendor Negotiation"
+    ],
+    "previous_roles": [
+      "Operations Director at ApexFreight",
+      "Fleet Logistics Manager at MetroTransit"
+    ],
+    "management_experience": "Led 35 dispatch coordinators and fleet drivers across 3 logistics hubs.",
+    "leadership_score": 89.0,
+    "achievements": [
+      "Reduced average last-mile delivery route cost by 22% using automated dispatch routing algorithms.",
+      "Achieved 99.2% on-time delivery metric across 100,000+ commercial shipments over 18 months."
+    ],
+    "salary_expectation": 2500.0,
+    "availability": "2 weeks notice",
+    "location": "Karachi, Pakistan",
+    "work_preference": "Hybrid"
+  },
+  {
+    "id": "mgr-zainab-farooq",
+    "name": "Zainab Farooq",
+    "title": "E-Commerce Customer Experience & Operations Lead",
+    "years_experience": 4.5,
+    "industries": [
+      "E-commerce",
+      "D2C Retail"
+    ],
+    "skills": [
+      "Customer Experience (CX)",
+      "Operations Management",
+      "Team Management",
+      "Process Optimization",
+      "E-commerce"
+    ],
+    "previous_roles": [
+      "Customer Operations Supervisor at StyleHub",
+      "CX Lead at UrbanMart"
+    ],
+    "management_experience": "Managed a frontline support and returns processing team of 12 agents.",
+    "leadership_score": 82.0,
+    "achievements": [
+      "Restructured order returns and exchanges process, cutting refund processing time from 5 days to 24 hours.",
+      "Decreased support ticket resolution time by 38% with pre-configured self-service order tracking."
+    ],
+    "salary_expectation": 1650.0,
+    "availability": "Immediate",
+    "location": "Lahore, Pakistan",
+    "work_preference": "Remote/Hybrid"
+  },
+  {
+    "id": "mgr-bilal-tariq",
+    "name": "Bilal Tariq",
+    "title": "FinTech Operations & Compliance Manager",
+    "years_experience": 8.0,
+    "industries": [
+      "FinTech",
+      "Banking"
+    ],
+    "skills": [
+      "FinTech Compliance",
+      "AML / KYC",
+      "Risk Management",
+      "Process Automation",
+      "Operations Management"
+    ],
+    "previous_roles": [
+      "Operations Manager at PaySecure",
+      "Compliance Analyst at National Digital Bank"
+    ],
+    "management_experience": "Managed 14 risk analysts and compliance officers handling merchant underwriting.",
+    "leadership_score": 88.0,
+    "achievements": [
+      "Automated KYC validation pipeline, cutting merchant onboarding wait time from 4 days to 3 hours.",
+      "Prevented $1.2M in fraudulent chargebacks by establishing rule-based transaction monitoring flags."
+    ],
+    "salary_expectation": 2700.0,
+    "availability": "Available",
+    "location": "Karachi, Pakistan",
+    "work_preference": "Hybrid"
+  },
+  {
+    "id": "mgr-amina-sheikh",
+    "name": "Amina Sheikh",
+    "title": "Healthcare Operations & Clinical Workflow Lead",
+    "years_experience": 6.5,
+    "industries": [
+      "Healthcare",
+      "HealthTech"
+    ],
+    "skills": [
+      "Healthcare Operations",
+      "Regulatory Compliance",
+      "Clinical Workflow Design",
+      "Patient Data Privacy",
+      "Cross-functional Leadership"
+    ],
+    "previous_roles": [
+      "Clinical Operations Specialist at TeleDoc Health",
+      "Hospital Operations Coordinator at Shifa Health"
+    ],
+    "management_experience": "Supervised 16 clinical coordinators and remote nursing support staff.",
+    "leadership_score": 85.0,
+    "achievements": [
+      "Orchestrated rollout of digital EHR across 15 outpatient clinics with zero regulatory non-compliance findings.",
+      "Reduced patient intake wait times by 40% through digitized pre-consultation triage checklists."
+    ],
+    "salary_expectation": 2300.0,
+    "availability": "Immediate",
+    "location": "Islamabad, Pakistan",
+    "work_preference": "Remote/Hybrid"
+  },
+  {
+    "id": "mgr-omar-siddiqui",
+    "name": "Omar Siddiqui",
+    "title": "Agile Delivery & Technical Project Manager",
+    "years_experience": 5.5,
+    "industries": [
+      "B2B SaaS",
+      "FinTech"
+    ],
+    "skills": [
+      "Agile / Scrum",
+      "Technical Product Management",
+      "Sprint Planning",
+      "Process Optimization",
+      "Cross-functional Leadership"
+    ],
+    "previous_roles": [
+      "Scrum Master at DevSprint",
+      "Technical Project Coordinator at FinTech Solutions"
+    ],
+    "management_experience": "Coached 2 agile development teams (14 developers, QA engineers, and UX designers).",
+    "leadership_score": 83.0,
+    "achievements": [
+      "Improved sprint velocity predictability by 32% over 6 consecutive product releases.",
+      "Eliminated delivery bottlenecks through structured retrospectives and automated Jira workflows."
+    ],
+    "salary_expectation": 1950.0,
+    "availability": "Available",
+    "location": "Rawalpindi, Pakistan",
+    "work_preference": "Remote"
+  },
+  {
+    "id": "mgr-fatima-noor",
+    "name": "Fatima Noor",
+    "title": "Supply Chain & Procurement Specialist",
+    "years_experience": 4.0,
+    "industries": [
+      "Logistics",
+      "E-commerce",
+      "Retail"
+    ],
+    "skills": [
+      "Supply Chain",
+      "Vendor Negotiation",
+      "Procurement",
+      "Inventory Control",
+      "Process Optimization"
+    ],
+    "previous_roles": [
+      "Procurement Lead at SwiftRetail",
+      "Inventory Analyst at SupplyLink"
+    ],
+    "management_experience": "Managed vendor relations and supervised 8 inventory coordinators.",
+    "leadership_score": 79.0,
+    "achievements": [
+      "Renegotiated packaging and carrier agreements saving 14% on total landed fulfillment costs.",
+      "Maintained 99.5% inventory accuracy rate across 2,000 active SKU lines."
+    ],
+    "salary_expectation": 1550.0,
+    "availability": "Immediate",
+    "location": "Faisalabad, Pakistan",
+    "work_preference": "Hybrid"
+  },
+  {
+    "id": "mgr-usman-malik",
+    "name": "Usman Malik",
+    "title": "VP of Engineering & Technology Strategy",
+    "years_experience": 13.0,
+    "industries": [
+      "B2B SaaS",
+      "Cloud Infrastructure",
+      "FinTech"
+    ],
+    "skills": [
+      "Engineering Management",
+      "Technical Architecture",
+      "DevOps & CI/CD",
+      "Team Leadership",
+      "Strategic Planning"
+    ],
+    "previous_roles": [
+      "VP of Engineering at CloudMatrix",
+      "Principal Architect at NetScale"
+    ],
+    "management_experience": "Executive leadership of 45 software and DevOps engineers across distributed teams.",
+    "leadership_score": 96.0,
+    "achievements": [
+      "Architected microservices infrastructure scaling to 50M API calls/day with 99.99% uptime.",
+      "Built engineering talent pipeline, reducing developer ramp-up time from 6 weeks to 10 days."
+    ],
+    "salary_expectation": 3400.0,
+    "availability": "1 month notice",
+    "location": "Lahore, Pakistan",
+    "work_preference": "Remote"
+  },
+  {
+    "id": "mgr-ayesha-baig",
+    "name": "Ayesha Baig",
+    "title": "Product Strategy & Customer Discovery Lead",
+    "years_experience": 5.0,
+    "industries": [
+      "B2B SaaS",
+      "EdTech",
+      "HealthTech"
+    ],
+    "skills": [
+      "Customer Discovery",
+      "Product Strategy",
+      "Market Research",
+      "Product Operations",
+      "Data Analytics"
+    ],
+    "previous_roles": [
+      "Senior Product Strategist at InnovateLabs",
+      "User Researcher at LearnPro"
+    ],
+    "management_experience": "Mentored 5 junior product managers and led cross-functional discovery pods.",
+    "leadership_score": 84.0,
+    "achievements": [
+      "Conducted 80+ customer discovery interviews identifying 3 high-value features that reduced customer churn by 26%.",
+      "Formulated initial pricing models leading to 12 closed enterprise pilot contracts within 90 days."
+    ],
+    "salary_expectation": 1900.0,
+    "availability": "Available",
+    "location": "Islamabad, Pakistan",
+    "work_preference": "Remote"
+  },
+  {
+    "id": "mgr-hamza-qureshi",
+    "name": "Hamza Qureshi",
+    "title": "Fleet Operations & Dispatch Manager",
+    "years_experience": 7.0,
+    "industries": [
+      "Logistics",
+      "Transportation"
+    ],
+    "skills": [
+      "Fleet Dispatch",
+      "Route Optimization",
+      "Driver Management",
+      "Operations Management",
+      "Telematics Analytics"
+    ],
+    "previous_roles": [
+      "Fleet Dispatch Supervisor at CityCargo",
+      "Dispatch Coordinator at MoveFast"
+    ],
+    "management_experience": "Managed fleet operations of 40 commercial vehicles and 48 drivers.",
+    "leadership_score": 86.0,
+    "achievements": [
+      "Implemented telematics tracking resulting in 16% reduction in idle fuel consumption.",
+      "Increased driver safety compliance to 98% and lowered dispatch delays by 25%."
+    ],
+    "salary_expectation": 2100.0,
+    "availability": "Immediate",
+    "location": "Karachi, Pakistan",
+    "work_preference": "On-site"
+  },
+  {
+    "id": "mgr-layla-chughtai",
+    "name": "Layla Chughtai",
+    "title": "FinTech Risk & Fraud Operations Lead",
+    "years_experience": 6.0,
+    "industries": [
+      "FinTech",
+      "Payments",
+      "E-commerce"
+    ],
+    "skills": [
+      "Fraud Prevention",
+      "Risk Management",
+      "AML / KYC",
+      "Payment Gateways",
+      "Operations Management"
+    ],
+    "previous_roles": [
+      "Senior Fraud Operations Analyst at SwiftPay",
+      "Risk Specialist at TransactNow"
+    ],
+    "management_experience": "Led a team of 9 fraud investigation and AML compliance specialists.",
+    "leadership_score": 85.0,
+    "achievements": [
+      "Engineered real-time fraud scoring rules that slashed chargeback dispute rates by 52%.",
+      "Maintained 99.8% regulatory reporting accuracy during national central bank audits."
+    ],
+    "salary_expectation": 2250.0,
+    "availability": "Available",
+    "location": "Lahore, Pakistan",
+    "work_preference": "Hybrid"
+  },
+  {
+    "id": "mgr-danish-rauf",
+    "name": "Danish Rauf",
+    "title": "E-Commerce Fulfillment & Warehouse Manager",
+    "years_experience": 6.0,
+    "industries": [
+      "E-commerce",
+      "Retail",
+      "Logistics"
+    ],
+    "skills": [
+      "Warehouse Management",
+      "Fulfillment Logistics",
+      "Process Optimization",
+      "Team Management",
+      "E-commerce"
+    ],
+    "previous_roles": [
+      "Warehouse Operations Supervisor at BoxLogix",
+      "Fulfillment Lead at ShopWave"
+    ],
+    "management_experience": "Supervised 20 warehouse fulfillment workers, packers, and dispatchers.",
+    "leadership_score": 83.0,
+    "achievements": [
+      "Increased warehouse pick-and-pack throughput by 35% during peak holiday shopping seasons.",
+      "Introduced barcode scanning verification, reducing mis-shipped parcels to under 0.2%."
+    ],
+    "salary_expectation": 1850.0,
+    "availability": "Immediate",
+    "location": "Karachi, Pakistan",
+    "work_preference": "Hybrid"
+  },
+  {
+    "id": "mgr-noreen-akhtar",
+    "name": "Noreen Akhtar",
+    "title": "Healthcare Compliance & Clinical Data Operations Lead",
+    "years_experience": 8.5,
+    "industries": [
+      "Healthcare",
+      "HealthTech",
+      "BioTech"
+    ],
+    "skills": [
+      "Regulatory Compliance",
+      "Patient Data Privacy",
+      "Clinical Workflow Design",
+      "Operations Management",
+      "Healthcare Operations"
+    ],
+    "previous_roles": [
+      "Senior Compliance Officer at MedTech Innovations",
+      "Clinical Systems Lead at Apex Healthcare"
+    ],
+    "management_experience": "Led 12 clinical documentation auditors and healthcare IT coordinators.",
+    "leadership_score": 89.0,
+    "achievements": [
+      "Successfully guided startup through full ISO 27001 and healthcare regulatory data security certifications.",
+      "Designed end-to-end clinical protocol audit tracking system, eliminating operational compliance gaps."
+    ],
+    "salary_expectation": 2600.0,
+    "availability": "2 weeks notice",
+    "location": "Islamabad, Pakistan",
+    "work_preference": "Remote/Hybrid"
+  },
+  {
+    "id": "mgr-farhan-mirza",
+    "name": "Farhan Mirza",
+    "title": "B2B SaaS Growth Operations & Revenue Operations Lead",
+    "years_experience": 5.0,
+    "industries": [
+      "B2B SaaS",
+      "Enterprise Software"
+    ],
+    "skills": [
+      "Revenue Operations",
+      "Process Automation",
+      "CRM Architecture",
+      "Product Operations",
+      "Data Analytics"
+    ],
+    "previous_roles": [
+      "RevOps Lead at PipelineSync",
+      "Sales Operations Analyst at SaaSMetric"
+    ],
+    "management_experience": "Managed 6 revenue operations analysts and sales enablement specialists.",
+    "leadership_score": 82.0,
+    "achievements": [
+      "Built automated Hubspot-to-Stripe billing reconciliation, saving 20 hours of manual bookkeeping weekly.",
+      "Optimized sales qualification funnel, improving demo-to-close conversion rate by 24%."
+    ],
+    "salary_expectation": 2050.0,
+    "availability": "Immediate",
+    "location": "Lahore, Pakistan",
+    "work_preference": "Remote"
+  },
+  {
+    "id": "mgr-samina-javaid",
+    "name": "Samina Javaid",
+    "title": "Operations & Talent Enablement Lead",
+    "years_experience": 4.0,
+    "industries": [
+      "E-commerce",
+      "B2B SaaS"
+    ],
+    "skills": [
+      "Team Management",
+      "Operations Management",
+      "Process Optimization",
+      "People Operations",
+      "Team Leadership"
+    ],
+    "previous_roles": [
+      "Operations Coordinator at QuickScale",
+      "Team Lead at ConnectSupport"
+    ],
+    "management_experience": "Managed onboarding and daily workflow coordination for 11 cross-functional team members.",
+    "leadership_score": 80.0,
+    "achievements": [
+      "Drafted company-wide operational playbook and training SOPs reducing new employee ramp time by 50%.",
+      "Instituted bi-weekly operational syncs that eliminated recurring cross-department handoff miscommunications."
+    ],
+    "salary_expectation": 1600.0,
+    "availability": "Immediate",
+    "location": "Karachi, Pakistan",
+    "work_preference": "Remote/Hybrid"
+  }
+]
