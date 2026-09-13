@@ -1,21 +1,23 @@
 import uuid
-import datetime
-from sqlalchemy import Column, String, Float, ForeignKey, DateTime
+from datetime import datetime, timezone
+from sqlalchemy import Column, String, Float, ForeignKey, Text, DateTime, JSON
 from app.core.database import Base
-from app.models.business import JSONEncodedDict
 
 class MatchRecord(Base):
     __tablename__ = "match_records"
 
     id = Column(String, primary_key=True, default=lambda: str(uuid.uuid4()))
-    business_id = Column(String, ForeignKey("businesses.id"), index=True)
-    manager_id = Column(String, ForeignKey("managers.id"), index=True)
+    business_id = Column(String, ForeignKey("businesses.id"), nullable=False)
+    manager_id = Column(String, ForeignKey("managers.id"), nullable=False)
     
-    # Deterministic scores
-    overall_score = Column(Float, index=True)
-    factor_scores = Column(JSONEncodedDict) # {industry: float, skills: float, stage: float, budget: float}
+    overall_score = Column(Float, nullable=False)
+    factor_scores = Column(JSON, nullable=False)
     
-    # Gemini AI qualitative analysis
-    qualitative_analysis = Column(JSONEncodedDict, nullable=True) # {strengths: [], concerns: [], missing_requirements: [], verdict: ""}
+    strengths = Column(JSON, nullable=True)
+    weaknesses = Column(JSON, nullable=True)
+    risks = Column(JSON, nullable=True)
+    missing_requirements = Column(JSON, nullable=True)
     
-    created_at = Column(DateTime, default=datetime.datetime.utcnow)
+    explanation = Column(Text, nullable=True)
+    
+    created_at = Column(DateTime(timezone=True), default=lambda: datetime.now(timezone.utc))
