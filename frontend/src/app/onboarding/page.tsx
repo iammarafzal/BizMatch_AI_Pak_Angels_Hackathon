@@ -5,7 +5,10 @@ import { useRouter } from "next/navigation";
 import { Zap } from "lucide-react";
 import { analyzeRequirements, calculateMatches } from "@/lib/api";
 
+export const dynamic = "force-dynamic";
+
 export default function OnboardingWizard() {
+
   const router = useRouter();
   const [step, setStep] = useState(1);
   const [loading, setLoading] = useState(false);
@@ -23,18 +26,24 @@ export default function OnboardingWizard() {
     budget: "",
   });
 
-  const loadDemoPreset = () => {
-    setFormData({
-      name: "FashionCart",
-      industry: "E-Commerce",
-      stage: "Growth",
-      location: "Lahore, Pakistan",
-      employees: "12",
-      goals: "Establish automated lifecycle email/SMS flows, Reduce CAC by 35%",
-      challenges: "High customer acquisition cost (CAC) on Meta ads and poor retention after first order.",
-      raw_preferences: "Need an aggressive growth leader who has scaled D2C apps in emerging markets without wasting budget.",
-      budget: "2000"
-    });
+  const loadDemoPreset = async () => {
+    try {
+      const { getFashionCartDemoData } = await import("@/lib/api");
+      const data = await getFashionCartDemoData();
+      setFormData({
+        name: data.name || "FashionCart",
+        industry: data.industry || "Fashion E-commerce",
+        stage: data.stage || "Growth",
+        location: data.location || "Lahore, Pakistan",
+        employees: String(data.employee_count || 12),
+        goals: data.goals || "",
+        challenges: data.challenges || data.core_problem || "",
+        raw_preferences: data.challenges || "",
+        budget: String(data.salary_budget || data.monthly_budget_usd || 2000),
+      });
+    } catch (err) {
+      console.error("Failed to load demo preset from API:", err);
+    }
   };
 
   const handleNext = () => setStep(2);
@@ -53,21 +62,18 @@ export default function OnboardingWizard() {
         raw_preferences: formData.raw_preferences
       });
       
-      console.log("Analyzed Data:", analyzeRes.data);
+      console.log("Analyzed Data:", analyzeRes);
 
       setLoadingText("Evaluating candidate pool against 6 deterministic fit factors...");
       
-      // We would normally create a business object in DB here and use its ID.
-      // For this hackathon demo, we will use a seeded business ID matching our presets.
-      // Let's use 'biz_01' which closely matches the FashionCart preset (QuickCart PK).
-      const businessId = "biz_01"; 
+      const businessId = "biz-fashioncart"; 
 
       // Step 2: Calculate Deterministic Matches
       const matchesRes = await calculateMatches(businessId);
       
-      if (matchesRes.success) {
+      if (matchesRes.matches && matchesRes.matches.length > 0) {
         // Hydrate global state or simply push router with query param
-        router.push(`/results?bizId=${businessId}`);
+        router.push(`/match/results?bizId=${businessId}`);
       }
     } catch (error) {
       console.error(error);

@@ -14,12 +14,14 @@ from app.schemas.explanation import MatchExplanation, ExplanationCard
 api_key = settings.GEMINI_API_KEY or os.environ.get("GEMINI_API_KEY", "")
 
 try:
+    model_name = settings.GEMINI_MODEL or os.environ.get("GEMINI_MODEL", "gemini-2.0-flash")
     llm = ChatGoogleGenerativeAI(
-        model="gemini-2.5-flash",
+        model=model_name,
         temperature=0.1,
         google_api_key=api_key or "dummy_key",
     )
 except Exception:
+
     llm = None
 
 
@@ -431,8 +433,11 @@ async def run_explainability_pipeline(
         final_exp = output.get("final_explanation")
         if final_exp and isinstance(final_exp, dict):
             return final_exp
-    except Exception:
-        pass
+    except Exception as exc:
+        import traceback
+        import sys
+        print(f"\n[LANGGRAPH ERROR] Explainability graph execution encountered an error: {exc}", file=sys.stderr, flush=True)
+        traceback.print_exc()
 
     # Safety net fallback if graph execution itself encounters an unforeseen issue
     fallback_explanation = _generate_fallback_explanation(business, manager, factor_scores, overall_score)

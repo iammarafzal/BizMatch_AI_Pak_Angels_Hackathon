@@ -9,6 +9,15 @@ from app.schemas.manager import ManagerResponse
 
 router = APIRouter(prefix="/managers", tags=["Managers"])
 
+ID_ALIASES = {
+    "mgr_01": "mgr-sarah-khan",
+    "mgr-sarah-khan": "mgr_01",
+    "mgr_02": "mgr-maria-james",
+    "mgr-maria-james": "mgr_02",
+    "mgr_03": "mgr-ali-ahmed",
+    "mgr-ali-ahmed": "mgr_03",
+}
+
 @router.get("", response_model=List[ManagerResponse], include_in_schema=False)
 @router.get("/", response_model=List[ManagerResponse])
 def get_managers(
@@ -16,7 +25,7 @@ def get_managers(
     db: Session = Depends(get_db)
 ):
     """
-    Retrieve curated manager profiles.
+    Retrieve curated manager profiles directly from the SQLite database.
     """
     query = select(Manager).limit(limit)
     result = db.execute(query)
@@ -29,8 +38,14 @@ def get_manager_by_id(
 ):
     """
     Retrieve details for a single manager candidate by ID.
+    Supports canonical IDs (e.g. 'mgr_01') and slug aliases (e.g. 'mgr-sarah-khan').
     """
-    result = db.execute(select(Manager).filter(Manager.id == manager_id))
+    lookup_ids = [manager_id]
+    alias = ID_ALIASES.get(manager_id)
+    if alias:
+        lookup_ids.append(alias)
+
+    result = db.execute(select(Manager).filter(Manager.id.in_(lookup_ids)))
     manager = result.scalars().first()
     if not manager:
         raise HTTPException(

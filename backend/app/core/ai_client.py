@@ -28,12 +28,15 @@ class GeminiClientManager:
             logger.info(f"Gemini API key for {label} is unconfigured or in test mode.")
             return None
         try:
+
+            model_name = settings.GEMINI_MODEL or os.environ.get("GEMINI_MODEL", "gemini-2.0-flash")
             return ChatGoogleGenerativeAI(
-                model="gemini-2.5-flash",
+                model=model_name,
                 temperature=0.1,
                 google_api_key=api_key
             )
         except Exception as exc:
+
             logger.warning(f"Failed to initialize ChatGoogleGenerativeAI for {label}: {exc}")
             return None
 
@@ -55,6 +58,9 @@ class GeminiClientManager:
         2. On 429 / rate limit / quota exhaustion / error, transparently retries with GEMINI_API_KEY_2.
         3. On double failure, returns score-grounded fallback.
         """
+        import traceback
+        import sys
+
         # Step 1: Attempt Primary LLM
         if self.primary_llm and self.is_key_valid(self.key1):
             try:
@@ -63,8 +69,10 @@ class GeminiClientManager:
                 if result is not None:
                     return result
             except Exception as primary_exc:
+                print(f"\n[GEMINI FAILOVER] Primary Gemini API key (KEY_1) failed: {primary_exc}", file=sys.stderr, flush=True)
+                traceback.print_exc()
                 logger.warning(
-                    f"Primary Gemini API key failed (Error: {primary_exc}). "
+                    f"[GEMINI FAILOVER] Primary Gemini key failed ({primary_exc}). "
                     "Initiating transparent failover to secondary GEMINI_API_KEY_2..."
                 )
 
@@ -74,18 +82,23 @@ class GeminiClientManager:
                 chain = chain_builder(self.secondary_llm)
                 result = await chain.ainvoke(inputs)
                 if result is not None:
+                    print("[GEMINI SUCCESS] Secondary Gemini API key execution succeeded cleanly after primary failover.", flush=True)
                     logger.info("Secondary Gemini API key execution succeeded cleanly after primary failover.")
                     return result
             except Exception as secondary_exc:
+                print(f"\n[GEMINI FAILOVER ERROR] Secondary Gemini API key (KEY_2) also failed: {secondary_exc}", file=sys.stderr, flush=True)
+                traceback.print_exc()
                 logger.error(
-                    f"Secondary Gemini API key also failed (Error: {secondary_exc}). "
+                    f"Secondary Gemini API key also failed ({secondary_exc}). "
                     "Falling back to score-grounded deterministic engine output."
                 )
         else:
             if self.primary_llm and self.is_key_valid(self.key1):
+                print("[GEMINI NOTICE] Secondary GEMINI_API_KEY_2 not configured or invalid for failover retry.", flush=True)
                 logger.warning("Secondary GEMINI_API_KEY_2 not configured for failover retry.")
 
         # Step 3: Score-grounded deterministic fallback
+        print("[GEMINI FALLBACK] Invoking score-grounded fallback handler to guarantee zero 500 internal server errors.", flush=True)
         logger.info("Invoking score-grounded fallback handler to guarantee zero 500 internal server errors.")
         return fallback_fn(inputs)
 

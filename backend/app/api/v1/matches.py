@@ -24,7 +24,7 @@ from app.schemas.match import (
 from app.engine.matcher import rank_managers_for_business, calculate_match
 from app.services.ai import run_explainability_pipeline
 
-from app.core.dependencies import get_current_user
+from app.core.dependencies import get_current_user, get_current_user_optional
 from app.models.user import User
 
 router = APIRouter(prefix="/matches", tags=["Matches"])
@@ -118,7 +118,7 @@ async def calculate_matches(
     req: CalculateMatchesRequest,
     include_explanations: bool = False,
     db: Session = Depends(get_db),
-    current_user: User = Depends(get_current_user)
+    current_user: Optional[User] = Depends(get_current_user_optional)
 ):
     """
     Calculate deterministic compatibility scores between a business and all candidate managers.
@@ -134,17 +134,8 @@ async def calculate_matches(
     business_obj = None
     persisted_in_db = False
 
-    # 1. Resolve business profile
-    if req.business_id:
-        result = db.execute(select(Business).filter(Business.id == str(req.business_id)))
-        business_obj = result.scalars().first()
-        if not business_obj:
-            raise HTTPException(
-                status_code=status.HTTP_404_NOT_FOUND,
-                detail=f"Business with ID '{req.business_id}' not found"
-            )
-        persisted_in_db = True
-    elif req.business_data:
+    # 1. Resolve business profile (prioritize dynamic business_data if provided)
+    if req.business_data:
         data = req.business_data.model_dump()
         budget = data.get("salary_budget")
         if budget is None:
@@ -175,6 +166,18 @@ async def calculate_matches(
         db.add(business_obj)
         db.commit()
         db.refresh(business_obj)
+        persisted_in_db = True
+    elif req.business_id:
+        biz_lookup_ids = [str(req.business_id)]
+        if str(req.business_id) in ("biz-fashioncart", "biz_01"):
+            biz_lookup_ids.extend(["biz-fashioncart", "biz_01"])
+        result = db.execute(select(Business).filter(Business.id.in_(biz_lookup_ids)))
+        business_obj = result.scalars().first()
+        if not business_obj:
+            raise HTTPException(
+                status_code=status.HTTP_404_NOT_FOUND,
+                detail=f"Business with ID '{req.business_id}' not found"
+            )
         persisted_in_db = True
 
     # 2. Fetch all managers from the database
@@ -291,7 +294,7 @@ def get_matches_for_business(
 async def explain_match(
     req: ExplainMatchRequest,
     db: Session = Depends(get_db),
-    current_user: User = Depends(get_current_user)
+    current_user: Optional[User] = Depends(get_current_user_optional)
 ):
     """
     Generate explainable decision support card for a selected candidate.
@@ -302,7 +305,19 @@ async def explain_match(
     mgr_id_str = str(req.manager_id)
 
     # 1. Fetch target Manager record from DB
-    mgr_result = db.execute(select(Manager).filter(Manager.id == mgr_id_str))
+    mgr_lookup_ids = [mgr_id_str]
+    mgr_aliases = {
+        "mgr_01": "mgr-sarah-khan",
+        "mgr-sarah-khan": "mgr_01",
+        "mgr_02": "mgr-maria-james",
+        "mgr-maria-james": "mgr_02",
+        "mgr_03": "mgr-ali-ahmed",
+        "mgr-ali-ahmed": "mgr_03",
+    }
+    if mgr_id_str in mgr_aliases:
+        mgr_lookup_ids.append(mgr_aliases[mgr_id_str])
+
+    mgr_result = db.execute(select(Manager).filter(Manager.id.in_(mgr_lookup_ids)))
     mgr = mgr_result.scalars().first()
     if not mgr:
         raise HTTPException(
@@ -311,7 +326,10 @@ async def explain_match(
         )
 
     # 2. Fetch target Business record from DB or use incoming transient context
-    biz_result = db.execute(select(Business).filter(Business.id == biz_id_str))
+    biz_lookup_ids = [biz_id_str]
+    if biz_id_str in ("biz-fashioncart", "biz_01"):
+        biz_lookup_ids.extend(["biz-fashioncart", "biz_01"])
+    biz_result = db.execute(select(Business).filter(Business.id.in_(biz_lookup_ids)))
     biz = biz_result.scalars().first()
 
     if not biz and not req.custom_business_context:

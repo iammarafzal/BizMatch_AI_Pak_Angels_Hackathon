@@ -16,7 +16,7 @@ from app.core.database import engine, Base
 from app.core.exceptions import AppException
 from app.core.middleware import RequestLoggingAndTimingMiddleware, SecurityHeadersMiddleware
 from app.core.rate_limiter import limiter, custom_rate_limit_handler
-from app.scripts.seed import auto_seed_if_empty
+from app.services.seeder import seed_database_if_empty
 
 # Ensure all SQLAlchemy models are registered
 import app.models.business
@@ -38,7 +38,7 @@ async def lifespan(app: FastAPI):
     await run_in_threadpool(Base.metadata.create_all, bind=engine)
     logger.info("Database tables initialized successfully.")
     try:
-        await run_in_threadpool(auto_seed_if_empty)
+        await run_in_threadpool(seed_database_if_empty)
     except Exception as e:
         logger.warning(f"Auto-seed warning: {e}")
     yield
@@ -103,12 +103,15 @@ async def generic_exception_handler(request: Request, exc: Exception):
 app.add_middleware(SecurityHeadersMiddleware)
 app.add_middleware(RequestLoggingAndTimingMiddleware)
 
-# CORS Middleware
+# CORS Middleware: allow configured origins, Vercel preview/prod domains, and standard headers
+cors_origins = settings.CORS_ORIGINS if isinstance(settings.CORS_ORIGINS, list) else [settings.CORS_ORIGINS]
+
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=settings.CORS_ORIGINS,
-    allow_credentials=True,
-    allow_methods=["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
+    allow_origins=cors_origins,
+    allow_origin_regex=r"^https://.*\.vercel\.app$" if "*" not in cors_origins else None,
+    allow_credentials=True if "*" not in cors_origins else False,
+    allow_methods=["*"],
     allow_headers=["*"],
 )
 
@@ -120,4 +123,7 @@ async def health_check(request: Request):
 app.include_router(api_router, prefix=settings.API_V1_STR)
 
 if __name__ == "__main__":
-    uvicorn.run("app.main:app", host="0.0.0.0", port=8000, reload=True)
+    import os
+    port = int(os.environ.get("PORT", settings.PORT))
+    uvicorn.run("app.main:app", host="0.0.0.0", port=port, reload=True)
+

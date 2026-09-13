@@ -10,10 +10,11 @@ from app.schemas.business import BusinessCreate
 
 # Initialize Gemini model via LangChain
 llm = ChatGoogleGenerativeAI(
-    model="gemini-2.5-flash",
+    model=settings.GEMINI_MODEL or "gemini-2.0-flash",
     temperature=0.1,
     google_api_key=settings.GEMINI_API_KEY or "dummy_key",
 )
+
 
 # 1. Requirement Extraction
 def extract_business_requirements(goals: str, challenges: str, preferences: str) -> dict:
