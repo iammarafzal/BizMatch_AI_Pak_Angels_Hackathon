@@ -12,14 +12,14 @@ STAGE_ADJACENCY = {
 class ScoringEngine:
     def _calculate_stage_score(self, business_stage: str, manager_stages: list[str]) -> float:
         if not manager_stages:
-            return 0.1
+            return 0.5
         if business_stage in manager_stages:
             return 1.0
         
         allowed_adjacent = STAGE_ADJACENCY.get(business_stage, [])
         if any(stage in manager_stages for stage in allowed_adjacent):
-            return 0.6
-        return 0.1
+            return 0.7
+        return 0.4
 
     def _calculate_skills_score(self, required_skills: list[str], manager_skills: list[str]) -> float:
         if not required_skills:
@@ -56,10 +56,24 @@ class ScoringEngine:
     async def compute_matches_for_business(self, business: Business, managers: list[Manager], limit: int = 10) -> list[dict]:
         ranked = []
         for m in managers:
-            s_stage = self._calculate_stage_score(business.stage, m.verified_stages)
-            s_skills = self._calculate_skills_score(business.required_skills, m.core_skills)
-            s_ind = self._calculate_industry_score(business.industry, m.industries)
-            s_budget = self._calculate_budget_score(business.monthly_budget_usd, m.monthly_rate_usd)
+            stages = getattr(m, "verified_stages", None) or getattr(m, "industries", []) or []
+            skills = getattr(m, "skills", None) or getattr(m, "core_skills", []) or []
+            industries = getattr(m, "industries", []) or []
+            
+            budget = getattr(business, "salary_budget", None)
+            if budget is None:
+                budget = getattr(business, "monthly_budget_usd", 0)
+                
+            rate = getattr(m, "salary_expectation", None)
+            if rate is None:
+                rate = getattr(m, "monthly_rate_usd", 0)
+            
+            req_skills = getattr(business, "required_skills", []) or []
+
+            s_stage = self._calculate_stage_score(business.stage or "Growth", stages)
+            s_skills = self._calculate_skills_score(req_skills, skills)
+            s_ind = self._calculate_industry_score(business.industry or "", industries)
+            s_budget = self._calculate_budget_score(float(budget or 0), float(rate or 0))
             
             # Weighted calculation
             w_stage, w_skills, w_ind, w_budget = 0.25, 0.35, 0.20, 0.20
@@ -75,10 +89,10 @@ class ScoringEngine:
                 "manager": m,
                 "overall_score": round(total_score, 2),
                 "factor_scores": {
-                    "stage": s_stage * 100,
-                    "skills": s_skills * 100,
-                    "industry": s_ind * 100,
-                    "budget": s_budget * 100
+                    "stage": round(s_stage * 100, 2),
+                    "skills": round(s_skills * 100, 2),
+                    "industry": round(s_ind * 100, 2),
+                    "budget": round(s_budget * 100, 2)
                 }
             })
             

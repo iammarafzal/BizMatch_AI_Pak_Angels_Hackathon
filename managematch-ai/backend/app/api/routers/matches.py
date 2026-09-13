@@ -1,3 +1,4 @@
+from datetime import datetime, timezone
 from fastapi import APIRouter, Depends, HTTPException, status
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.future import select
@@ -32,7 +33,6 @@ async def calculate_matches(
     engine = ScoringEngine()
     ranked = await engine.compute_matches_for_business(biz, managers)
     
-    # Normally we would save MatchRecords to DB here, but for hackathon demo speed we return them
     response_data = []
     for idx, match in enumerate(ranked):
         response_data.append(MatchRecordResponse(
@@ -41,7 +41,7 @@ async def calculate_matches(
             manager_id=match["manager"].id,
             overall_score=match["overall_score"],
             factor_scores=match["factor_scores"],
-            created_at=biz.id # Mock timestamp
+            created_at=datetime.now(timezone.utc)
         ))
         
     return CalculateMatchesResponse(success=True, data=response_data)
@@ -68,19 +68,25 @@ async def explain_match(
         
     match_data = matches[0]
     
+    goals = getattr(biz, "goals", None) or getattr(biz, "primary_goals", [])
+    if isinstance(goals, str):
+        goals = [goals]
+        
     biz_dict = {
+        "name": biz.name,
         "industry": biz.industry,
         "stage": biz.stage,
-        "goals": biz.primary_goals,
-        "skills": biz.required_skills
+        "goals": goals,
+        "skills": getattr(biz, "required_skills", []) or []
     }
     
     mgr_dict = {
-        "title": mgr.role_title,
-        "industries": mgr.industries,
-        "stages": mgr.verified_stages,
-        "skills": mgr.core_skills,
-        "experience": mgr.verified_track_record
+        "name": mgr.name,
+        "title": getattr(mgr, "title", None) or getattr(mgr, "role_title", ""),
+        "industries": getattr(mgr, "industries", []) or [],
+        "stages": getattr(mgr, "verified_stages", None) or getattr(mgr, "industries", []),
+        "skills": getattr(mgr, "skills", None) or getattr(mgr, "core_skills", []),
+        "experience": getattr(mgr, "management_experience", None) or getattr(mgr, "verified_track_record", "")
     }
     
     analysis = await generate_match_explanation(
