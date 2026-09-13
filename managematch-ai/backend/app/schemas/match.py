@@ -4,6 +4,16 @@ from datetime import datetime
 from app.schemas.manager import ManagerResponse
 from app.schemas.business import BusinessCreate
 
+class StructuredRequirements(BaseModel):
+    industry: str = Field(description="Normalized industry or business vertical (e.g., fashion e-commerce, b2b saas)")
+    business_stage: str = Field(description="Inferred or stated business stage (e.g., Early, Growth, Scaling)")
+    key_priorities: List[str] = Field(description="Top 3-4 operational, strategic, or scaling priorities")
+    required_skills: List[str] = Field(description="Standardized technical and management skills needed")
+    experience_requirements: List[str] = Field(description="Domain-specific and leadership experience requirements")
+    experience_profile: Optional[List[str]] = None
+
+    model_config = ConfigDict(extra="ignore")
+
 class MatchFactorScores(BaseModel):
     industry_fit: float
     skills_fit: float
@@ -65,13 +75,16 @@ class MatchRecordResponse(MatchRecordBase):
     model_config = ConfigDict(from_attributes=True)
 
 class AnalyzeRequirementsRequest(BaseModel):
+    name: Optional[str] = None
+    industry: Optional[str] = None
+    stage: Optional[str] = None
     goals: str
     challenges: str
-    raw_preferences: str
+    raw_preferences: Optional[str] = None
 
 class AnalyzeRequirementsResponse(BaseModel):
     success: bool
-    data: dict
+    data: Union[StructuredRequirements, dict]
 
 class CalculateMatchesResponse(BaseModel):
     success: bool
