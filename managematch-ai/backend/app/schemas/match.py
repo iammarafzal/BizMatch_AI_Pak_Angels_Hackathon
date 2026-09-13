@@ -28,6 +28,7 @@ class CandidateMatchSummary(BaseModel):
     manager: ManagerResponse
     overall_score: float
     factor_scores: MatchFactorScores
+    explanation: Optional[Dict[str, Any]] = None
 
 class BatchMatchResponse(BaseModel):
     business_id: str
@@ -95,10 +96,4 @@ class CalculateMatchesResponse(BaseModel):
     success: bool
     data: List[MatchRecordResponse]
 
-class ExplainMatchRequest(BaseModel):
-    business_id: str
-    manager_id: str
-
-class ExplainMatchResponse(BaseModel):
-    success: bool
-    data: Union[QualitativeAnalysis, Dict[str, Any]]
+from app.schemas.explanation import ExplainMatchRequest, ExplainMatchResponse

@@ -1,4 +1,5 @@
-from typing import List, Dict, Optional, Any
+from datetime import datetime, timezone
+from typing import List, Dict, Optional, Any, Union
 from pydantic import BaseModel, ConfigDict, Field
 
 class MatchExplanation(BaseModel):
@@ -41,3 +42,54 @@ class ExplanationCard(BaseModel):
     verdict: str = Field(description="1-2 sentence balanced decision-support synthesis")
 
     model_config = ConfigDict(extra="allow")
+
+
+class ExplainMatchRequest(BaseModel):
+    """
+    Request schema for match explanation API endpoint.
+    """
+    business_id: Union[str, int] = Field(description="References an existing business in DB")
+    manager_id: Union[str, int] = Field(description="References an existing manager in DB")
+    custom_business_context: Optional[Dict[str, Any]] = Field(
+        default=None,
+        description="Optional transient onboarding inputs if evaluating on the fly"
+    )
+
+    model_config = ConfigDict(extra="allow")
+
+
+class ExplainMatchResponse(BaseModel):
+    """
+    Response schema for match explanation API endpoint.
+    Provides direct field access as well as nested data envelope for
+    broad frontend and test suite compatibility.
+    """
+    success: bool = True
+    manager_id: Union[str, int] = Field(description="Candidate manager identifier")
+    manager_name: str = Field(description="Candidate manager full name")
+    manager_title: str = Field(description="Candidate manager professional headline/title")
+    overall_score: float = Field(description="Deterministic overall compatibility score (0-100)")
+    factor_scores: Dict[str, float] = Field(description="6 factor sub-scores breakdown")
+    strengths: List[str] = Field(description="2-4 concrete evidence-backed strengths")
+    concerns: List[str] = Field(description="1-3 potential trade-offs or risk areas")
+    missing_requirements: List[str] = Field(default_factory=list, description="Explicitly missing requirements")
+    verdict: str = Field(description="1-2 sentence balanced decision-support synthesis")
+    generated_at: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))
+    data: Optional[Dict[str, Any]] = None
+
+    model_config = ConfigDict(extra="allow")
+
+    def model_post_init(self, __context: Any) -> None:
+        if self.data is None:
+            self.data = {
+                "manager_id": str(self.manager_id),
+                "manager_name": self.manager_name,
+                "manager_title": self.manager_title,
+                "overall_score": self.overall_score,
+                "factor_scores": self.factor_scores,
+                "strengths": self.strengths,
+                "concerns": self.concerns,
+                "missing_requirements": self.missing_requirements,
+                "verdict": self.verdict,
+                "generated_at": self.generated_at.isoformat(),
+            }
