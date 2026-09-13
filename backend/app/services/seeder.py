@@ -114,8 +114,7 @@ def seed_database_if_empty(db: Session = None):
             demo_user = User(
                 email="founder@bizmatch.ai",
                 hashed_password=hash_password("password123"),
-                full_name="Demo Founder",
-                role="founder"
+                role="FOUNDER"
             )
             db.add(demo_user)
 
