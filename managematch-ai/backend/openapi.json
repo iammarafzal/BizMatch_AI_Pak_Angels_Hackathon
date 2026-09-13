@@ -1,0 +1,2369 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "BizMatch AI",
+    "description": "BizMatch AI - High-velocity match and explainability engine connecting businesses with vetted fractional and full-time leaders.",
+    "version": "0.1.0"
+  },
+  "paths": {
+    "/health": {
+      "get": {
+        "tags": [
+          "Health"
+        ],
+        "summary": "Health Check",
+        "operationId": "health_check_health_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/businesses/": {
+      "get": {
+        "tags": [
+          "Businesses"
+        ],
+        "summary": "Get Businesses",
+        "description": "Retrieve all seeded and user-created businesses.",
+        "operationId": "get_businesses_api_v1_businesses__get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "items": {
+                    "$ref": "#/components/schemas/BusinessResponse"
+                  },
+                  "type": "array",
+                  "title": "Response Get Businesses Api V1 Businesses  Get"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Businesses"
+        ],
+        "summary": "Create Business",
+        "description": "Create a new business profile in the database.",
+        "operationId": "create_business_api_v1_businesses__post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/BusinessCreate"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BusinessResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/businesses/{business_id}": {
+      "get": {
+        "tags": [
+          "Businesses"
+        ],
+        "summary": "Get Business By Id",
+        "description": "Retrieve a single business profile by ID.",
+        "operationId": "get_business_by_id_api_v1_businesses__business_id__get",
+        "parameters": [
+          {
+            "name": "business_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Business Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BusinessResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/businesses/analyze-requirements": {
+      "post": {
+        "tags": [
+          "Businesses"
+        ],
+        "summary": "Analyze Requirements",
+        "description": "Parse unstructured business goals and challenges into structured requirements.",
+        "operationId": "analyze_requirements_api_v1_businesses_analyze_requirements_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AnalyzeRequirementsRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AnalyzeRequirementsResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/managers/": {
+      "get": {
+        "tags": [
+          "Managers"
+        ],
+        "summary": "Get Managers",
+        "description": "Retrieve curated manager profiles.",
+        "operationId": "get_managers_api_v1_managers__get",
+        "parameters": [
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "integer",
+                  "maximum": 100,
+                  "minimum": 1
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "description": "Maximum number of managers to retrieve",
+              "default": 20,
+              "title": "Limit"
+            },
+            "description": "Maximum number of managers to retrieve"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ManagerResponse"
+                  },
+                  "title": "Response Get Managers Api V1 Managers  Get"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/managers/{manager_id}": {
+      "get": {
+        "tags": [
+          "Managers"
+        ],
+        "summary": "Get Manager By Id",
+        "description": "Retrieve details for a single manager candidate by ID.",
+        "operationId": "get_manager_by_id_api_v1_managers__manager_id__get",
+        "parameters": [
+          {
+            "name": "manager_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Manager Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ManagerResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/matches/calculate": {
+      "post": {
+        "tags": [
+          "Matches"
+        ],
+        "summary": "Calculate Matches",
+        "description": "Calculate deterministic compatibility scores between a business and all candidate managers.\nAccepts either an existing 'business_id' OR an inline 'business_data' payload.\nOptional query param 'include_explanations=true' pre-computes explanations for the top 3 matches.",
+        "operationId": "calculate_matches_api_v1_matches_calculate_post",
+        "parameters": [
+          {
+            "name": "include_explanations",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "boolean",
+              "default": false,
+              "title": "Include Explanations"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CalculateMatchesRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BatchMatchResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/matches/{business_id}": {
+      "get": {
+        "tags": [
+          "Matches"
+        ],
+        "summary": "Get Matches For Business",
+        "description": "Retrieve historical match records for a business.",
+        "operationId": "get_matches_for_business_api_v1_matches__business_id__get",
+        "parameters": [
+          {
+            "name": "business_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Business Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/MatchRecordResponse"
+                  },
+                  "title": "Response Get Matches For Business Api V1 Matches  Business Id  Get"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/matches/explain": {
+      "post": {
+        "tags": [
+          "Matches"
+        ],
+        "summary": "Explain Match",
+        "description": "Generate explainable decision support card for a selected candidate.\nAccepts business_id, manager_id, and optional custom_business_context.\nPersists results to PostgreSQL and returns full ExplainMatchResponse.",
+        "operationId": "explain_match_api_v1_matches_explain_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ExplainMatchRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ExplainMatchResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/analyze-requirements": {
+      "post": {
+        "tags": [
+          "Requirements Extraction"
+        ],
+        "summary": "Analyze Requirements",
+        "description": "Extract structured hiring requirements, priorities, and skills from founder goals and challenges.\nUses Google Gemini via LangChain with automatic fallback.",
+        "operationId": "analyze_requirements_api_v1_analyze_requirements_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AnalyzeRequirementsRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StructuredRequirements"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/demo/fashioncart": {
+      "get": {
+        "tags": [
+          "Demo"
+        ],
+        "summary": "Get Fashioncart Demo Preset",
+        "description": "Returns the pre-configured FashionCart test scenario payload.\nUsed by the frontend '\u26a1 Load FashionCart Demo' preset button to instantly\nhydrate onboarding wizard forms in under one second.",
+        "operationId": "get_fashioncart_demo_preset_api_v1_demo_fashioncart_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "type": "object",
+                  "title": "Response Get Fashioncart Demo Preset Api V1 Demo Fashioncart Get"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/businesses/": {
+      "get": {
+        "tags": [
+          "Businesses"
+        ],
+        "summary": "Get Businesses",
+        "description": "Retrieve all seeded and user-created businesses.",
+        "operationId": "get_businesses_api_businesses__get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "items": {
+                    "$ref": "#/components/schemas/BusinessResponse"
+                  },
+                  "type": "array",
+                  "title": "Response Get Businesses Api Businesses  Get"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Businesses"
+        ],
+        "summary": "Create Business",
+        "description": "Create a new business profile in the database.",
+        "operationId": "create_business_api_businesses__post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/BusinessCreate"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BusinessResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/businesses/{business_id}": {
+      "get": {
+        "tags": [
+          "Businesses"
+        ],
+        "summary": "Get Business By Id",
+        "description": "Retrieve a single business profile by ID.",
+        "operationId": "get_business_by_id_api_businesses__business_id__get",
+        "parameters": [
+          {
+            "name": "business_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Business Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BusinessResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/businesses/analyze-requirements": {
+      "post": {
+        "tags": [
+          "Businesses"
+        ],
+        "summary": "Analyze Requirements",
+        "description": "Parse unstructured business goals and challenges into structured requirements.",
+        "operationId": "analyze_requirements_api_businesses_analyze_requirements_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AnalyzeRequirementsRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AnalyzeRequirementsResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/managers/": {
+      "get": {
+        "tags": [
+          "Managers"
+        ],
+        "summary": "Get Managers",
+        "description": "Retrieve curated manager profiles.",
+        "operationId": "get_managers_api_managers__get",
+        "parameters": [
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "integer",
+                  "maximum": 100,
+                  "minimum": 1
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "description": "Maximum number of managers to retrieve",
+              "default": 20,
+              "title": "Limit"
+            },
+            "description": "Maximum number of managers to retrieve"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ManagerResponse"
+                  },
+                  "title": "Response Get Managers Api Managers  Get"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/managers/{manager_id}": {
+      "get": {
+        "tags": [
+          "Managers"
+        ],
+        "summary": "Get Manager By Id",
+        "description": "Retrieve details for a single manager candidate by ID.",
+        "operationId": "get_manager_by_id_api_managers__manager_id__get",
+        "parameters": [
+          {
+            "name": "manager_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Manager Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ManagerResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/matches/calculate": {
+      "post": {
+        "tags": [
+          "Matches"
+        ],
+        "summary": "Calculate Matches",
+        "description": "Calculate deterministic compatibility scores between a business and all candidate managers.\nAccepts either an existing 'business_id' OR an inline 'business_data' payload.\nOptional query param 'include_explanations=true' pre-computes explanations for the top 3 matches.",
+        "operationId": "calculate_matches_api_matches_calculate_post",
+        "parameters": [
+          {
+            "name": "include_explanations",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "boolean",
+              "default": false,
+              "title": "Include Explanations"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CalculateMatchesRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BatchMatchResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/matches/{business_id}": {
+      "get": {
+        "tags": [
+          "Matches"
+        ],
+        "summary": "Get Matches For Business",
+        "description": "Retrieve historical match records for a business.",
+        "operationId": "get_matches_for_business_api_matches__business_id__get",
+        "parameters": [
+          {
+            "name": "business_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Business Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/MatchRecordResponse"
+                  },
+                  "title": "Response Get Matches For Business Api Matches  Business Id  Get"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/matches/explain": {
+      "post": {
+        "tags": [
+          "Matches"
+        ],
+        "summary": "Explain Match",
+        "description": "Generate explainable decision support card for a selected candidate.\nAccepts business_id, manager_id, and optional custom_business_context.\nPersists results to PostgreSQL and returns full ExplainMatchResponse.",
+        "operationId": "explain_match_api_matches_explain_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ExplainMatchRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ExplainMatchResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/analyze-requirements": {
+      "post": {
+        "tags": [
+          "Requirements Extraction"
+        ],
+        "summary": "Analyze Requirements",
+        "description": "Extract structured hiring requirements, priorities, and skills from founder goals and challenges.\nUses Google Gemini via LangChain with automatic fallback.",
+        "operationId": "analyze_requirements_api_analyze_requirements_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AnalyzeRequirementsRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StructuredRequirements"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/demo/fashioncart": {
+      "get": {
+        "tags": [
+          "Demo"
+        ],
+        "summary": "Get Fashioncart Demo Preset",
+        "description": "Returns the pre-configured FashionCart test scenario payload.\nUsed by the frontend '\u26a1 Load FashionCart Demo' preset button to instantly\nhydrate onboarding wizard forms in under one second.",
+        "operationId": "get_fashioncart_demo_preset_api_demo_fashioncart_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "type": "object",
+                  "title": "Response Get Fashioncart Demo Preset Api Demo Fashioncart Get"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "AnalyzeRequirementsRequest": {
+        "properties": {
+          "name": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Name"
+          },
+          "industry": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Industry"
+          },
+          "stage": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Stage"
+          },
+          "goals": {
+            "type": "string",
+            "title": "Goals"
+          },
+          "challenges": {
+            "type": "string",
+            "title": "Challenges"
+          },
+          "raw_preferences": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Raw Preferences"
+          }
+        },
+        "type": "object",
+        "required": [
+          "goals",
+          "challenges"
+        ],
+        "title": "AnalyzeRequirementsRequest"
+      },
+      "AnalyzeRequirementsResponse": {
+        "properties": {
+          "success": {
+            "type": "boolean",
+            "title": "Success"
+          },
+          "data": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/StructuredRequirements"
+              },
+              {
+                "additionalProperties": true,
+                "type": "object"
+              }
+            ],
+            "title": "Data"
+          }
+        },
+        "type": "object",
+        "required": [
+          "success",
+          "data"
+        ],
+        "title": "AnalyzeRequirementsResponse"
+      },
+      "BatchMatchResponse": {
+        "properties": {
+          "business_id": {
+            "type": "string",
+            "title": "Business Id"
+          },
+          "total_evaluated": {
+            "type": "integer",
+            "title": "Total Evaluated"
+          },
+          "matches": {
+            "items": {
+              "$ref": "#/components/schemas/CandidateMatchSummary"
+            },
+            "type": "array",
+            "title": "Matches"
+          }
+        },
+        "type": "object",
+        "required": [
+          "business_id",
+          "total_evaluated",
+          "matches"
+        ],
+        "title": "BatchMatchResponse"
+      },
+      "BusinessCreate": {
+        "properties": {
+          "name": {
+            "type": "string",
+            "title": "Name"
+          },
+          "industry": {
+            "type": "string",
+            "title": "Industry"
+          },
+          "size": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Size"
+          },
+          "stage": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Stage"
+          },
+          "location": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Location"
+          },
+          "employee_count": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Employee Count"
+          },
+          "business_model": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Business Model"
+          },
+          "goals": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Goals"
+          },
+          "challenges": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Challenges"
+          },
+          "required_skills": {
+            "anyOf": [
+              {
+                "items": {
+                  "type": "string"
+                },
+                "type": "array"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Required Skills",
+            "default": []
+          },
+          "required_experience": {
+            "anyOf": [
+              {
+                "items": {
+                  "type": "string"
+                },
+                "type": "array"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Required Experience",
+            "default": []
+          },
+          "leadership_requirements": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Leadership Requirements"
+          },
+          "salary_budget": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Salary Budget",
+            "default": 0.0
+          },
+          "work_arrangement": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Work Arrangement"
+          },
+          "monthly_budget_usd": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Monthly Budget Usd"
+          },
+          "core_problem": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Core Problem"
+          },
+          "primary_goals": {
+            "anyOf": [
+              {
+                "items": {
+                  "type": "string"
+                },
+                "type": "array"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Primary Goals",
+            "default": []
+          },
+          "raw_founder_notes": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Raw Founder Notes"
+          }
+        },
+        "type": "object",
+        "required": [
+          "name",
+          "industry"
+        ],
+        "title": "BusinessCreate"
+      },
+      "BusinessResponse": {
+        "properties": {
+          "name": {
+            "type": "string",
+            "title": "Name"
+          },
+          "industry": {
+            "type": "string",
+            "title": "Industry"
+          },
+          "size": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Size"
+          },
+          "stage": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Stage"
+          },
+          "location": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Location"
+          },
+          "employee_count": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Employee Count"
+          },
+          "business_model": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Business Model"
+          },
+          "goals": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Goals"
+          },
+          "challenges": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Challenges"
+          },
+          "required_skills": {
+            "anyOf": [
+              {
+                "items": {
+                  "type": "string"
+                },
+                "type": "array"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Required Skills",
+            "default": []
+          },
+          "required_experience": {
+            "anyOf": [
+              {
+                "items": {
+                  "type": "string"
+                },
+                "type": "array"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Required Experience",
+            "default": []
+          },
+          "leadership_requirements": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Leadership Requirements"
+          },
+          "salary_budget": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Salary Budget",
+            "default": 0.0
+          },
+          "work_arrangement": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Work Arrangement"
+          },
+          "monthly_budget_usd": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Monthly Budget Usd"
+          },
+          "core_problem": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Core Problem"
+          },
+          "primary_goals": {
+            "anyOf": [
+              {
+                "items": {
+                  "type": "string"
+                },
+                "type": "array"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Primary Goals",
+            "default": []
+          },
+          "raw_founder_notes": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Raw Founder Notes"
+          },
+          "id": {
+            "type": "string",
+            "title": "Id"
+          },
+          "created_at": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date-time"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Created At"
+          }
+        },
+        "type": "object",
+        "required": [
+          "name",
+          "industry",
+          "id"
+        ],
+        "title": "BusinessResponse"
+      },
+      "CalculateMatchesRequest": {
+        "properties": {
+          "business_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Business Id"
+          },
+          "business_data": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/BusinessCreate"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          }
+        },
+        "type": "object",
+        "title": "CalculateMatchesRequest"
+      },
+      "CandidateMatchSummary": {
+        "properties": {
+          "manager": {
+            "$ref": "#/components/schemas/ManagerResponse"
+          },
+          "overall_score": {
+            "type": "number",
+            "title": "Overall Score"
+          },
+          "factor_scores": {
+            "$ref": "#/components/schemas/MatchFactorScores"
+          },
+          "explanation": {
+            "anyOf": [
+              {
+                "additionalProperties": true,
+                "type": "object"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Explanation"
+          }
+        },
+        "type": "object",
+        "required": [
+          "manager",
+          "overall_score",
+          "factor_scores"
+        ],
+        "title": "CandidateMatchSummary"
+      },
+      "ExplainMatchRequest": {
+        "properties": {
+          "business_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "integer"
+              }
+            ],
+            "title": "Business Id",
+            "description": "References an existing business in DB"
+          },
+          "manager_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "integer"
+              }
+            ],
+            "title": "Manager Id",
+            "description": "References an existing manager in DB"
+          },
+          "custom_business_context": {
+            "anyOf": [
+              {
+                "additionalProperties": true,
+                "type": "object"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Custom Business Context",
+            "description": "Optional transient onboarding inputs if evaluating on the fly"
+          }
+        },
+        "additionalProperties": true,
+        "type": "object",
+        "required": [
+          "business_id",
+          "manager_id"
+        ],
+        "title": "ExplainMatchRequest",
+        "description": "Request schema for match explanation API endpoint."
+      },
+      "ExplainMatchResponse": {
+        "properties": {
+          "success": {
+            "type": "boolean",
+            "title": "Success",
+            "default": true
+          },
+          "manager_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "integer"
+              }
+            ],
+            "title": "Manager Id",
+            "description": "Candidate manager identifier"
+          },
+          "manager_name": {
+            "type": "string",
+            "title": "Manager Name",
+            "description": "Candidate manager full name"
+          },
+          "manager_title": {
+            "type": "string",
+            "title": "Manager Title",
+            "description": "Candidate manager professional headline/title"
+          },
+          "overall_score": {
+            "type": "number",
+            "title": "Overall Score",
+            "description": "Deterministic overall compatibility score (0-100)"
+          },
+          "factor_scores": {
+            "additionalProperties": {
+              "type": "number"
+            },
+            "type": "object",
+            "title": "Factor Scores",
+            "description": "6 factor sub-scores breakdown"
+          },
+          "strengths": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Strengths",
+            "description": "2-4 concrete evidence-backed strengths"
+          },
+          "concerns": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Concerns",
+            "description": "1-3 potential trade-offs or risk areas"
+          },
+          "missing_requirements": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Missing Requirements",
+            "description": "Explicitly missing requirements"
+          },
+          "verdict": {
+            "type": "string",
+            "title": "Verdict",
+            "description": "1-2 sentence balanced decision-support synthesis"
+          },
+          "generated_at": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Generated At"
+          },
+          "data": {
+            "anyOf": [
+              {
+                "additionalProperties": true,
+                "type": "object"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Data"
+          }
+        },
+        "additionalProperties": true,
+        "type": "object",
+        "required": [
+          "manager_id",
+          "manager_name",
+          "manager_title",
+          "overall_score",
+          "factor_scores",
+          "strengths",
+          "concerns",
+          "verdict"
+        ],
+        "title": "ExplainMatchResponse",
+        "description": "Response schema for match explanation API endpoint.\nProvides direct field access as well as nested data envelope for\nbroad frontend and test suite compatibility."
+      },
+      "FactorScores": {
+        "properties": {
+          "industry": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Industry"
+          },
+          "skills": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Skills"
+          },
+          "stage": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Stage"
+          },
+          "budget": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Budget"
+          },
+          "industry_fit": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Industry Fit"
+          },
+          "skills_fit": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Skills Fit"
+          },
+          "experience_fit": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Experience Fit"
+          },
+          "leadership_fit": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Leadership Fit"
+          },
+          "stage_fit": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Stage Fit"
+          },
+          "salary_fit": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Salary Fit"
+          }
+        },
+        "additionalProperties": true,
+        "type": "object",
+        "title": "FactorScores"
+      },
+      "HTTPValidationError": {
+        "properties": {
+          "detail": {
+            "items": {
+              "$ref": "#/components/schemas/ValidationError"
+            },
+            "type": "array",
+            "title": "Detail"
+          }
+        },
+        "type": "object",
+        "title": "HTTPValidationError"
+      },
+      "ManagerResponse": {
+        "properties": {
+          "name": {
+            "type": "string",
+            "title": "Name"
+          },
+          "title": {
+            "type": "string",
+            "title": "Title"
+          },
+          "years_experience": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Years Experience",
+            "default": 0.0
+          },
+          "industries": {
+            "anyOf": [
+              {
+                "items": {
+                  "type": "string"
+                },
+                "type": "array"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Industries",
+            "default": []
+          },
+          "skills": {
+            "anyOf": [
+              {
+                "items": {
+                  "type": "string"
+                },
+                "type": "array"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Skills",
+            "default": []
+          },
+          "previous_roles": {
+            "anyOf": [
+              {
+                "items": {
+                  "type": "string"
+                },
+                "type": "array"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Previous Roles",
+            "default": []
+          },
+          "management_experience": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Management Experience"
+          },
+          "leadership_score": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Leadership Score",
+            "default": 0.0
+          },
+          "achievements": {
+            "anyOf": [
+              {
+                "items": {
+                  "type": "string"
+                },
+                "type": "array"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Achievements",
+            "default": []
+          },
+          "salary_expectation": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Salary Expectation",
+            "default": 0.0
+          },
+          "availability": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Availability"
+          },
+          "location": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Location"
+          },
+          "work_preference": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Work Preference"
+          },
+          "role_title": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Role Title"
+          },
+          "monthly_rate_usd": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Monthly Rate Usd"
+          },
+          "verified_stages": {
+            "anyOf": [
+              {
+                "items": {
+                  "type": "string"
+                },
+                "type": "array"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Verified Stages",
+            "default": []
+          },
+          "core_skills": {
+            "anyOf": [
+              {
+                "items": {
+                  "type": "string"
+                },
+                "type": "array"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Core Skills",
+            "default": []
+          },
+          "verified_track_record": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Verified Track Record"
+          },
+          "education": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Education"
+          },
+          "id": {
+            "type": "string",
+            "title": "Id"
+          },
+          "created_at": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date-time"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Created At"
+          }
+        },
+        "type": "object",
+        "required": [
+          "name",
+          "title",
+          "id"
+        ],
+        "title": "ManagerResponse"
+      },
+      "MatchFactorScores": {
+        "properties": {
+          "industry_fit": {
+            "type": "number",
+            "title": "Industry Fit"
+          },
+          "skills_fit": {
+            "type": "number",
+            "title": "Skills Fit"
+          },
+          "experience_fit": {
+            "type": "number",
+            "title": "Experience Fit"
+          },
+          "leadership_fit": {
+            "type": "number",
+            "title": "Leadership Fit"
+          },
+          "stage_fit": {
+            "type": "number",
+            "title": "Stage Fit"
+          },
+          "salary_fit": {
+            "type": "number",
+            "title": "Salary Fit"
+          }
+        },
+        "type": "object",
+        "required": [
+          "industry_fit",
+          "skills_fit",
+          "experience_fit",
+          "leadership_fit",
+          "stage_fit",
+          "salary_fit"
+        ],
+        "title": "MatchFactorScores"
+      },
+      "MatchRecordResponse": {
+        "properties": {
+          "business_id": {
+            "type": "string",
+            "title": "Business Id"
+          },
+          "manager_id": {
+            "type": "string",
+            "title": "Manager Id"
+          },
+          "overall_score": {
+            "type": "number",
+            "title": "Overall Score"
+          },
+          "factor_scores": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/FactorScores"
+              },
+              {
+                "additionalProperties": true,
+                "type": "object"
+              }
+            ],
+            "title": "Factor Scores"
+          },
+          "qualitative_analysis": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/QualitativeAnalysis"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "id": {
+            "type": "string",
+            "title": "Id"
+          },
+          "created_at": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date-time"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Created At"
+          }
+        },
+        "type": "object",
+        "required": [
+          "business_id",
+          "manager_id",
+          "overall_score",
+          "factor_scores",
+          "id"
+        ],
+        "title": "MatchRecordResponse"
+      },
+      "QualitativeAnalysis": {
+        "properties": {
+          "strengths": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Strengths"
+          },
+          "concerns": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Concerns"
+          },
+          "missing_requirements": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Missing Requirements"
+          },
+          "verdict": {
+            "type": "string",
+            "title": "Verdict"
+          },
+          "manager_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Manager Id"
+          },
+          "overall_score": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Overall Score"
+          },
+          "factor_scores": {
+            "anyOf": [
+              {
+                "additionalProperties": {
+                  "type": "number"
+                },
+                "type": "object"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Factor Scores"
+          }
+        },
+        "additionalProperties": true,
+        "type": "object",
+        "required": [
+          "strengths",
+          "concerns",
+          "verdict"
+        ],
+        "title": "QualitativeAnalysis"
+      },
+      "StructuredRequirements": {
+        "properties": {
+          "industry": {
+            "type": "string",
+            "title": "Industry",
+            "description": "Normalized industry or business vertical (e.g., fashion e-commerce, b2b saas)"
+          },
+          "business_stage": {
+            "type": "string",
+            "title": "Business Stage",
+            "description": "Inferred or stated business stage (e.g., Early, Growth, Scaling)"
+          },
+          "key_priorities": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Key Priorities",
+            "description": "Top 3-4 operational, strategic, or scaling priorities"
+          },
+          "required_skills": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Required Skills",
+            "description": "Standardized technical and management skills needed"
+          },
+          "experience_requirements": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Experience Requirements",
+            "description": "Domain-specific and leadership experience requirements"
+          },
+          "experience_profile": {
+            "anyOf": [
+              {
+                "items": {
+                  "type": "string"
+                },
+                "type": "array"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Experience Profile"
+          }
+        },
+        "type": "object",
+        "required": [
+          "industry",
+          "business_stage",
+          "key_priorities",
+          "required_skills",
+          "experience_requirements"
+        ],
+        "title": "StructuredRequirements"
+      },
+      "ValidationError": {
+        "properties": {
+          "loc": {
+            "items": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "integer"
+                }
+              ]
+            },
+            "type": "array",
+            "title": "Location"
+          },
+          "msg": {
+            "type": "string",
+            "title": "Message"
+          },
+          "type": {
+            "type": "string",
+            "title": "Error Type"
+          },
+          "input": {
+            "title": "Input"
+          },
+          "ctx": {
+            "type": "object",
+            "title": "Context"
+          }
+        },
+        "type": "object",
+        "required": [
+          "loc",
+          "msg",
+          "type"
+        ],
+        "title": "ValidationError"
+      }
+    }
+  }
+}
